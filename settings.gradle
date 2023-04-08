@@ -16,3 +16,4 @@ rootProject.name = "Cinema"
 include ':app'
 include ':navigation'
 include ':feature:movies-upcoming'
+include ':feature:favorites'

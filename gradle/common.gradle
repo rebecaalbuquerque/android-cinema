@@ -1,0 +1,28 @@
+afterEvaluate { project ->
+
+    if (project.hasProperty('android')) {
+        android {
+            compileSdkVersion 32
+
+            defaultConfig {
+                minSdkVersion 21
+                targetSdkVersion 32
+                versionCode 1
+                versionName "1.0"
+            }
+
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8
+            }
+
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
+
+            buildFeatures {
+                viewBinding true
+            }
+        }
+    }
+}

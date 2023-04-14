@@ -1,4 +1,4 @@
-package com.albuquerque.movies
+package com.albuquerque.data
 
 import org.junit.Test
 

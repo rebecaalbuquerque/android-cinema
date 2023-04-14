@@ -1,4 +1,4 @@
-package com.albuquerque.movies
+package com.albuquerque.domain
 
 import org.junit.Test
 

@@ -2,4 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.albuquerque.favorites">
 
+    <application>
+        <activity
+            android:name=".FavoritesMainActivity"
+            android:exported="false" />
+    </application>
+
 </manifest>

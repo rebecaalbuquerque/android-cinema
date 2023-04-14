@@ -1,4 +1,8 @@
 apply from: rootProject.file('gradle/common.gradle')
 
 dependencies {
+    implementation project(":navigation")
+
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 }

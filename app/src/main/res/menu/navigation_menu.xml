@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/movies_upcoming_navigation"
+        android:icon="@drawable/ic_movies"
+        android:title="@string/tab_navigation_movies_upcoming_name"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/favorites_navigation"
+        android:icon="@drawable/ic_favorites"
+        android:title="@string/tab_navigation_favorites_name"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/reminders_navigation"
+        android:icon="@drawable/ic_reminders"
+        android:title="@string/tab_navigation_reminders_name"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/movies_upcoming_navigation">
+
+    <include app:graph="@navigation/movies_upcoming_navigation_graph"/>
+    <include app:graph="@navigation/favorites_navigation_graph"/>
+    <include app:graph="@navigation/reminders_navigation_graph"/>
+
+</navigation>

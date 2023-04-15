@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.albuquerque.designsystem.extension.toastShort
 import com.albuquerque.moviesupcoming.databinding.FragmentMoviesUpcomingBinding
 import com.albuquerque.moviesupcoming.presentation.adapter.MoviesUpcomingAdapter
 import kotlinx.coroutines.launch
@@ -22,7 +23,11 @@ internal class MoviesUpcomingFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesUpcomingBinding.inflate(inflater, container, false)
-        adapter = MoviesUpcomingAdapter()
+        adapter = MoviesUpcomingAdapter().apply {
+            onMovieClick = {
+                toastShort("onMovieClick ${it.title}")
+            }
+        }
         return binding?.root
     }
 

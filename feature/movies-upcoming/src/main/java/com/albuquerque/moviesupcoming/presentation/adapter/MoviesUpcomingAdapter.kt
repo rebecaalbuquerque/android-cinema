@@ -17,6 +17,8 @@ internal class MoviesUpcomingAdapter : RecyclerView.Adapter<MoviesUpcomingViewHo
             diffUtilResult.dispatchUpdatesTo(this)
         }
 
+    var onMovieClick: ((Movie) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesUpcomingViewHolder {
         val view = MovieUpcomingViewHolderBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -28,7 +30,7 @@ internal class MoviesUpcomingAdapter : RecyclerView.Adapter<MoviesUpcomingViewHo
         movies.size
 
     override fun onBindViewHolder(holder: MoviesUpcomingViewHolder, position: Int) {
-        holder.bind(movies[position])
+        holder.bind(movies[position], onMovieClick)
     }
 
 

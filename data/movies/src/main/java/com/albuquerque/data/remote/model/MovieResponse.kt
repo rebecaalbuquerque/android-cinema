@@ -1,4 +1,4 @@
-package com.albuquerque.data.model
+package com.albuquerque.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

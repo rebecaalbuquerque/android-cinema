@@ -1,6 +1,7 @@
 package com.albuquerque.cinema.application
 
 import android.app.Application
+import com.albuquerque.data.di.databaseModule
 import com.albuquerque.data.di.moviesDataModule
 import com.albuquerque.data.di.networkModule
 import com.albuquerque.domain.di.moviesDomainModule
@@ -19,6 +20,7 @@ class CinemaApplication : Application() {
             androidContext(this@CinemaApplication)
             modules(
                 networkModule,
+                databaseModule,
                 moviesDataModule,
                 moviesDomainModule,
                 moviesUpcomingPresentationModules,

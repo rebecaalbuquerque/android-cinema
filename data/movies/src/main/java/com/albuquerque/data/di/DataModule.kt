@@ -1,17 +1,20 @@
 package com.albuquerque.data.di
 
-import com.albuquerque.data.api.MoviesApi
+import androidx.room.Room
+import com.albuquerque.data.remote.MoviesApi
 import com.albuquerque.data.core.interceptor.ApiInterceptor
 import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesLocalDataSourceImpl
 import com.albuquerque.data.datasource.MoviesRemoteDataSource
 import com.albuquerque.data.datasource.MoviesRemoteDataSourceImpl
+import com.albuquerque.data.local.MoviesDatabase
 import com.albuquerque.data.repository.MoviesRepositoryImpl
 import com.albuquerque.domain.repository.MoviesRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -51,11 +54,23 @@ val networkModule = module {
     }
 }
 
+val databaseModule = module {
+
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            MoviesDatabase::class.java,
+            "movies-db"
+        ).build()
+    }
+    single { get<MoviesDatabase>().moviesDao() }
+}
+
 val moviesDataModule = module {
     factory { get<Retrofit>().create(MoviesApi::class.java) }
 
-    factory<MoviesRemoteDataSource>{ MoviesRemoteDataSourceImpl(api = get()) }
-    factory<MoviesLocalDataSource>{ MoviesLocalDataSourceImpl() }
+    factory<MoviesRemoteDataSource> { MoviesRemoteDataSourceImpl(api = get()) }
+    factory<MoviesLocalDataSource> { MoviesLocalDataSourceImpl() }
 
     factory<MoviesRepository> {
         MoviesRepositoryImpl(remoteDataSource = get(), localDataSource = get())

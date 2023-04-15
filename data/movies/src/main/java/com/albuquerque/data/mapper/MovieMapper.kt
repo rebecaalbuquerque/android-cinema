@@ -1,7 +1,7 @@
 package com.albuquerque.data.mapper
 
-import com.albuquerque.data.model.MovieListResponse
-import com.albuquerque.data.model.MovieResponse
+import com.albuquerque.data.remote.model.MovieListResponse
+import com.albuquerque.data.remote.model.MovieResponse
 import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.model.MovieList
 

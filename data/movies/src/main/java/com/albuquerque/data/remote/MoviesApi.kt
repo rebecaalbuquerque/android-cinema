@@ -1,6 +1,6 @@
-package com.albuquerque.data.api
+package com.albuquerque.data.remote
 
-import com.albuquerque.data.model.MovieListResponse
+import com.albuquerque.data.remote.model.MovieListResponse
 import retrofit2.http.GET
 
 interface MoviesApi {

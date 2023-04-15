@@ -33,6 +33,7 @@ android {
 dependencies {
 
     implementation project(":navigation")
+    implementation project(':design-system')
     implementation project(":data:movies")
     implementation project(":domain:movies")
     implementation project(":feature:movies-upcoming")

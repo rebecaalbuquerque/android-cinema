@@ -7,5 +7,10 @@ import org.koin.dsl.module
 
 val moviesUpcomingPresentationModules = module {
     factory<MoviesUpcomingNavigation> { MoviesUpcomingNavigationImpl() }
-    factory{ MoviesUpcomingViewModel(getUpcomingMoviesUseCase = get()) }
+    factory{
+        MoviesUpcomingViewModel(
+            getUpcomingMoviesUseCase = get(),
+            toggleFavoriteUseCase = get()
+        )
+    }
 }

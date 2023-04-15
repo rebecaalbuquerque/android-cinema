@@ -10,7 +10,8 @@ internal fun MovieResponse.toMovie(): Movie {
         id = id ?: 0,
         title = title.orEmpty(),
         overview = overview.orEmpty(),
-        releaseDate = releaseDate.orEmpty()
+        releaseDate = releaseDate.orEmpty(),
+        isFavorite = false
     )
 }
 

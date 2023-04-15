@@ -24,8 +24,10 @@ internal class MoviesUpcomingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesUpcomingBinding.inflate(inflater, container, false)
         adapter = MoviesUpcomingAdapter().apply {
-            onMovieClick = {
-                toastShort("onMovieClick ${it.title}")
+            onMovieClick = { viewModel.onItemClick(it.id) }
+            onFavoriteClick = { movie, isFavorite ->
+                toastShort("Favorite ${movie.id}")
+                viewModel.onFavoriteClick(movie.id, isFavorite)
             }
         }
         return binding?.root
@@ -34,6 +36,7 @@ internal class MoviesUpcomingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupState()
+        setupAction()
     }
 
     override fun onDestroyView() {
@@ -62,4 +65,16 @@ internal class MoviesUpcomingFragment : Fragment() {
         }
     }
 
+    private fun setupAction() = lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewModel.action.collect { action ->
+                when (action) {
+                    is MoviesUpcomingAction.NavigateToMovieDetail -> {
+                        toastShort("MovieId: ${action.movieId}")
+                    }
+                    null -> Unit
+                }
+            }
+        }
+    }
 }

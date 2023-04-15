@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.albuquerque.moviesupcoming.databinding.ActivityMoviesUpcomingMainBinding
 
-internal class MoviesUpcomingMainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMoviesUpcomingMainBinding
 

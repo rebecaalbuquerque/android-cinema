@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/movies_upcoming_navigation"
-        android:icon="@drawable/ic_movies"
+        android:icon="@drawable/ic_tab_movies"
         android:title="@string/tab_navigation_movies_upcoming_name"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/favorites_navigation"
-        android:icon="@drawable/ic_favorites"
+        android:icon="@drawable/ic_tab_favorites"
         android:title="@string/tab_navigation_favorites_name"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/reminders_navigation"
-        android:icon="@drawable/ic_reminders"
+        android:icon="@drawable/ic_tab_reminders"
         android:title="@string/tab_navigation_reminders_name"
         app:showAsAction="ifRoom" />
 

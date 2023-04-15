@@ -34,7 +34,7 @@ internal class MoviesUpcomingViewModel(
                     _state.update { MoviesUpcomingState.Error() }
                 }
                 .collect { movieList ->
-                    _state.update { MoviesUpcomingState.Success(movieList.toString()) }
+                    _state.update { MoviesUpcomingState.Success(movieList.results) }
                 }
         }
     }

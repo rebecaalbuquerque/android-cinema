@@ -1,9 +1,9 @@
-package com.albuquerque.favorites.presentation
+package com.albuquerque.moviesupcoming.presentation
 
 import androidx.core.view.isVisible
 import com.albuquerque.designsystem.extension.bindSafely
 
-internal fun FavoritesFragment.showEmptyView() = binding.bindSafely {
+internal fun MoviesUpcomingFragment.showEmptyView() = binding.bindSafely {
     containerFeedback.apply {
         isVisible = true
         feedbackContainer {
@@ -13,7 +13,7 @@ internal fun FavoritesFragment.showEmptyView() = binding.bindSafely {
     }
 }
 
-internal fun FavoritesFragment.showErrorView() = binding.bindSafely {
+internal fun MoviesUpcomingFragment.showErrorView() = binding.bindSafely {
     containerFeedback.apply {
         isVisible = true
         feedbackContainer {

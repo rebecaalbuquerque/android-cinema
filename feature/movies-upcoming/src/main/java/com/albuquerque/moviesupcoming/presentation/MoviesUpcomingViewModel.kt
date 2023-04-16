@@ -55,7 +55,11 @@ internal class MoviesUpcomingViewModel(
                     _state.update { MoviesUpcomingState.Error() }
                 }
                 .collect { movieList ->
-                    _state.update { MoviesUpcomingState.Success(movieList.results) }
+                    if (movieList.results.isEmpty()) {
+                        _state.update { MoviesUpcomingState.Empty }
+                    } else {
+                        _state.update { MoviesUpcomingState.Success(movieList.results) }
+                    }
                 }
         }
     }

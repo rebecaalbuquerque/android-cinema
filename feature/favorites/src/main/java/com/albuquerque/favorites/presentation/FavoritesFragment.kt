@@ -72,6 +72,7 @@ internal class FavoritesFragment : Fragment() {
                         }
                         is FavoritesState.Success -> {
                             containerLoading.isVisible = false
+                            containerFeedback.isVisible = false
                             adapter?.movies = state.data
                         }
                     }

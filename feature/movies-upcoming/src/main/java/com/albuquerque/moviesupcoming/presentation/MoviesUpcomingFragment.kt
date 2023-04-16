@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.albuquerque.designsystem.extension.bindSafely
 import com.albuquerque.designsystem.extension.toastShort
 import com.albuquerque.moviesupcoming.databinding.FragmentMoviesUpcomingBinding
 import com.albuquerque.moviesupcoming.presentation.adapter.MoviesUpcomingAdapter
@@ -17,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class MoviesUpcomingFragment : Fragment() {
 
-    private var binding: FragmentMoviesUpcomingBinding? = null
+    internal var binding: FragmentMoviesUpcomingBinding? = null
     private var adapter: MoviesUpcomingAdapter? = null
     private val viewModel: MoviesUpcomingViewModel by viewModel()
 
@@ -47,23 +48,33 @@ internal class MoviesUpcomingFragment : Fragment() {
         adapter = null
     }
 
-    private fun setupView() {
-        binding?.recyclerViewMovies?.adapter = adapter
+    private fun setupView() = binding.bindSafely {
+        recyclerViewMovies.adapter = adapter
     }
 
     private fun setupState() = lifecycleScope.launch {
-        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.state.collect { state ->
-                when (state) {
-                    MoviesUpcomingState.Loading -> {
-                        binding?.containerLoading?.isVisible = true
-                    }
-                    is MoviesUpcomingState.Error -> {
-                        binding?.containerLoading?.isVisible = false
-                    }
-                    is MoviesUpcomingState.Success -> {
-                        binding?.containerLoading?.isVisible = false
-                        adapter?.movies = state.data
+                binding.bindSafely {
+                    when (state) {
+                        MoviesUpcomingState.Loading -> {
+                            containerLoading.isVisible = true
+                            containerFeedback.isVisible = false
+                        }
+                        is MoviesUpcomingState.Empty -> {
+                            containerLoading.isVisible = false
+                            adapter?.movies = emptyList()
+                            showEmptyView()
+                        }
+                        is MoviesUpcomingState.Error -> {
+                            containerLoading.isVisible = false
+                            showErrorView()
+                        }
+                        is MoviesUpcomingState.Success -> {
+                            containerLoading.isVisible = false
+                            containerFeedback.isVisible = false
+                            adapter?.movies = state.data
+                        }
                     }
                 }
             }

@@ -3,9 +3,9 @@ package com.albuquerque.moviesupcoming.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albuquerque.domain.model.Movie
-import com.albuquerque.domain.usecase.GetUpcomingMoviesUseCase
+import com.albuquerque.moviesupcoming.domain.usecase.GetUpcomingMoviesUseCase
 import com.albuquerque.domain.usecase.ToggleFavoriteUseCase
-import com.albuquerque.moviesupcoming.domain.UpdateUpcomingMoviesFavoriteUseCase
+import com.albuquerque.moviesupcoming.domain.usecase.UpdateUpcomingMoviesFavoriteUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

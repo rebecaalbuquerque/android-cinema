@@ -1,16 +1,18 @@
 package com.albuquerque.moviesupcoming.di
 
-import com.albuquerque.moviesupcoming.domain.UpdateUpcomingMoviesFavoriteUseCase
+import com.albuquerque.moviesupcoming.domain.usecase.GetUpcomingMoviesUseCase
+import com.albuquerque.moviesupcoming.domain.usecase.UpdateUpcomingMoviesFavoriteUseCase
 import com.albuquerque.moviesupcoming.navigation.MoviesUpcomingNavigationImpl
 import com.albuquerque.moviesupcoming.presentation.MoviesUpcomingViewModel
 import com.albuquerque.navigation.moviesupcoming.MoviesUpcomingNavigation
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val moviesUpcomingPresentationModules = module {
     factory<MoviesUpcomingNavigation> { MoviesUpcomingNavigationImpl() }
-    factory{
+    viewModel {
         MoviesUpcomingViewModel(
-            getUpcomingMoviesUseCase = get(),
+            getUpcomingMoviesUseCase = GetUpcomingMoviesUseCase(repository = get()),
             toggleFavoriteUseCase = get(),
             updateUpcomingMoviesFavoriteUseCase = UpdateUpcomingMoviesFavoriteUseCase()
         )

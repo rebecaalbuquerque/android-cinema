@@ -28,7 +28,7 @@ internal class MoviesUpcomingFragment : Fragment() {
                 viewModel.onItemClick(it.id)
             }
             onFavoriteClick = { movie ->
-                viewModel.onFavoriteClick(adapter?.movies.orEmpty(), movie)
+                viewModel.onFavoriteClick(this.movies, movie)
             }
         }
         return binding?.root

@@ -1,4 +1,4 @@
-package com.albuquerque.moviesupcoming.domain
+package com.albuquerque.moviesupcoming.domain.usecase
 
 import com.albuquerque.domain.model.Movie
 

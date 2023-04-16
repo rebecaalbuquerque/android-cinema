@@ -13,10 +13,10 @@ internal class MoviesUpcomingViewHolder(
     fun bind(
         movie: Movie,
         onMovieClick: ((Movie) -> Unit)?,
-        onFavoriteClick: ((Movie, Boolean) -> Unit)?
+        onFavoriteClick: ((Movie) -> Unit)?
     ) = with(binding) {
         root.onClickListener { onMovieClick?.invoke(movie) }
-        favorite.onClickListener { onFavoriteClick?.invoke(movie, !movie.isFavorite) }
+        favorite.onClickListener { onFavoriteClick?.invoke(movie) }
         favorite.setImageResource(
             if (movie.isFavorite) R.drawable.ds_ic_favorite else R.drawable.ds_ic_favorite_outline
         )

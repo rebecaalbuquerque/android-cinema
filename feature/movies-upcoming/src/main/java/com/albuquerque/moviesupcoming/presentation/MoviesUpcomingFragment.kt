@@ -24,10 +24,11 @@ internal class MoviesUpcomingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesUpcomingBinding.inflate(inflater, container, false)
         adapter = MoviesUpcomingAdapter().apply {
-            onMovieClick = { viewModel.onItemClick(it.id) }
-            onFavoriteClick = { movie, isFavorite ->
-                toastShort("Favorite ${movie.id}")
-                viewModel.onFavoriteClick(movie.id, isFavorite)
+            onMovieClick = {
+                viewModel.onItemClick(it.id)
+            }
+            onFavoriteClick = { movie ->
+                viewModel.onFavoriteClick(adapter?.movies.orEmpty(), movie)
             }
         }
         return binding?.root
@@ -35,6 +36,7 @@ internal class MoviesUpcomingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupView()
         setupState()
         setupAction()
     }
@@ -43,6 +45,10 @@ internal class MoviesUpcomingFragment : Fragment() {
         super.onDestroyView()
         binding = null
         adapter = null
+    }
+
+    private fun setupView() {
+        binding?.recyclerViewMovies?.adapter = adapter
     }
 
     private fun setupState() = lifecycleScope.launch {
@@ -57,7 +63,6 @@ internal class MoviesUpcomingFragment : Fragment() {
                     }
                     is MoviesUpcomingState.Success -> {
                         binding?.containerLoading?.isVisible = false
-                        binding?.recyclerViewMovies?.adapter = adapter
                         adapter?.movies = state.data
                     }
                 }

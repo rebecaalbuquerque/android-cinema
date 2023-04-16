@@ -18,7 +18,7 @@ internal class MoviesUpcomingAdapter : RecyclerView.Adapter<MoviesUpcomingViewHo
         }
 
     var onMovieClick: ((Movie) -> Unit)? = null
-    var onFavoriteClick: ((Movie, Boolean) -> Unit)? = null
+    var onFavoriteClick: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesUpcomingViewHolder {
         val view = MovieUpcomingViewHolderBinding.inflate(

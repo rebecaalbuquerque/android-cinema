@@ -2,8 +2,10 @@ package com.albuquerque.moviesupcoming.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.usecase.GetUpcomingMoviesUseCase
 import com.albuquerque.domain.usecase.ToggleFavoriteUseCase
+import com.albuquerque.moviesupcoming.domain.UpdateUpcomingMoviesFavoriteUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 
 internal class MoviesUpcomingViewModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
+    private val updateUpcomingMoviesFavoriteUseCase: UpdateUpcomingMoviesFavoriteUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
@@ -35,9 +38,12 @@ internal class MoviesUpcomingViewModel(
         _action.update { MoviesUpcomingAction.NavigateToMovieDetail(movieId) }
     }
 
-    fun onFavoriteClick(movieId: Int, isFavorite: Boolean) {
+    fun onFavoriteClick(movies: List<Movie>, movie: Movie) {
         viewModelScope.launch {
-            toggleFavoriteUseCase(movieId, isFavorite)
+            val movieUpdated = toggleFavoriteUseCase(movie)
+            _state.update {
+                MoviesUpcomingState.Success(updateUpcomingMoviesFavoriteUseCase(movies, movieUpdated))
+            }
         }
     }
 

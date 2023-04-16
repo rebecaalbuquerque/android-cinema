@@ -1,12 +1,19 @@
 package com.albuquerque.domain.usecase
 
+import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.repository.MoviesRepository
 
 class ToggleFavoriteUseCase(
     private val repository: MoviesRepository
 ) {
 
-    operator fun invoke(movieId: Int, isFavorite: Boolean) {
+    suspend operator fun invoke( movie: Movie): Movie {
+        val movieUpdated = movie.copy(
+            isFavorite = !movie.isFavorite
+        )
 
+        repository.updateFavorite(movieUpdated)
+
+        return movieUpdated
     }
 }

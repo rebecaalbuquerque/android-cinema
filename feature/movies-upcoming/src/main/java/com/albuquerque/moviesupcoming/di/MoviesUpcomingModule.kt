@@ -1,5 +1,6 @@
 package com.albuquerque.moviesupcoming.di
 
+import com.albuquerque.moviesupcoming.domain.UpdateUpcomingMoviesFavoriteUseCase
 import com.albuquerque.moviesupcoming.navigation.MoviesUpcomingNavigationImpl
 import com.albuquerque.moviesupcoming.presentation.MoviesUpcomingViewModel
 import com.albuquerque.navigation.moviesupcoming.MoviesUpcomingNavigation
@@ -10,7 +11,8 @@ val moviesUpcomingPresentationModules = module {
     factory{
         MoviesUpcomingViewModel(
             getUpcomingMoviesUseCase = get(),
-            toggleFavoriteUseCase = get()
+            toggleFavoriteUseCase = get(),
+            updateUpcomingMoviesFavoriteUseCase = UpdateUpcomingMoviesFavoriteUseCase()
         )
     }
 }

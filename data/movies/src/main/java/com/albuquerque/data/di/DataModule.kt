@@ -7,6 +7,7 @@ import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesLocalDataSourceImpl
 import com.albuquerque.data.datasource.MoviesRemoteDataSource
 import com.albuquerque.data.datasource.MoviesRemoteDataSourceImpl
+import com.albuquerque.data.local.MovieDao
 import com.albuquerque.data.local.MoviesDatabase
 import com.albuquerque.data.repository.MoviesRepositoryImpl
 import com.albuquerque.domain.repository.MoviesRepository
@@ -57,20 +58,23 @@ val networkModule = module {
 val databaseModule = module {
 
     single {
-        Room.databaseBuilder(
+         Room.databaseBuilder(
             androidApplication(),
             MoviesDatabase::class.java,
             "movies-db"
         ).build()
     }
-    single { get<MoviesDatabase>().moviesDao() }
+    single {
+        val database = get<MoviesDatabase>()
+        database.moviesDao()
+    }
 }
 
 val moviesDataModule = module {
     factory { get<Retrofit>().create(MoviesApi::class.java) }
 
     factory<MoviesRemoteDataSource> { MoviesRemoteDataSourceImpl(api = get()) }
-    factory<MoviesLocalDataSource> { MoviesLocalDataSourceImpl() }
+    factory<MoviesLocalDataSource> { MoviesLocalDataSourceImpl(dao = get()) }
 
     factory<MoviesRepository> {
         MoviesRepositoryImpl(remoteDataSource = get(), localDataSource = get())

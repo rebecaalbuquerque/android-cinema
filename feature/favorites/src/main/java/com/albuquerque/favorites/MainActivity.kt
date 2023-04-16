@@ -2,10 +2,9 @@ package com.albuquerque.favorites
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.albuquerque.favorites.R
 import com.albuquerque.favorites.databinding.ActivityFavoritesMainBinding
 
-internal class FavoritesMainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoritesMainBinding
 

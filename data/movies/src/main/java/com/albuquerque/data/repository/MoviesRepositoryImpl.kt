@@ -7,6 +7,7 @@ import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.model.MovieList
 import com.albuquerque.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
 
@@ -18,7 +19,7 @@ class MoviesRepositoryImpl(
     override fun getUpcomingMovies(): Flow<MovieList> {
         val upcomingMovies = remoteDataSource.getUpcomingMovies().map { it.toMovieList() }
 
-        return upcomingMovies.zip(localDataSource.getFavorites()) { upcoming, favorites ->
+        return upcomingMovies.combine(localDataSource.getFavorites()) { upcoming, favorites ->
             if (favorites.isEmpty()){
                 upcoming
             } else {

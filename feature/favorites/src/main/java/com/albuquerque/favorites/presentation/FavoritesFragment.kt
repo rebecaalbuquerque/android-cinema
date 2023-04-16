@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FavoritesFragment : Fragment() {
 
-    private var binding: FragmentFavoritesBinding? = null
+    internal var binding: FragmentFavoritesBinding? = null
     private var adapter: FavoritesAdapter? = null
     private val viewModel: FavoritesViewModel by viewModel()
 
@@ -52,14 +52,21 @@ internal class FavoritesFragment : Fragment() {
     }
 
     private fun setupState() = lifecycleScope.launch {
-        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.state.collect { state ->
                 when (state) {
                     FavoritesState.Loading -> {
                         binding?.containerLoading?.isVisible = true
+                        binding?.containerFeedback?.isVisible = false
+                    }
+                    FavoritesState.Empty -> {
+                        binding?.containerLoading?.isVisible = false
+                        adapter?.movies = emptyList()
+                        showEmptyView()
                     }
                     is FavoritesState.Error -> {
                         binding?.containerLoading?.isVisible = false
+                        showErrorView()
                     }
                     is FavoritesState.Success -> {
                         binding?.containerLoading?.isVisible = false

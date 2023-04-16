@@ -49,7 +49,11 @@ internal class FavoritesViewModel(
                 _state.update { FavoritesState.Error() }
             }
             .collect { favorites ->
-                _state.update { FavoritesState.Success(favorites) }
+                if (favorites.isEmpty()) {
+                    _state.update { FavoritesState.Empty }
+                } else {
+                    _state.update { FavoritesState.Success(favorites) }
+                }
             }
     }
 }

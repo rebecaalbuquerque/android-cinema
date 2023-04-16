@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.albuquerque.designsystem.extension.bindSafely
 import com.albuquerque.designsystem.extension.toastShort
 import com.albuquerque.favorites.databinding.FragmentFavoritesBinding
 import com.albuquerque.favorites.presentation.adapter.FavoritesAdapter
@@ -47,30 +48,32 @@ internal class FavoritesFragment : Fragment() {
         adapter = null
     }
 
-    private fun setupView() {
-        binding?.recyclerViewFavorites?.adapter = adapter
+    private fun setupView() = binding.bindSafely {
+        recyclerViewFavorites.adapter = adapter
     }
 
     private fun setupState() = lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.state.collect { state ->
-                when (state) {
-                    FavoritesState.Loading -> {
-                        binding?.containerLoading?.isVisible = true
-                        binding?.containerFeedback?.isVisible = false
-                    }
-                    FavoritesState.Empty -> {
-                        binding?.containerLoading?.isVisible = false
-                        adapter?.movies = emptyList()
-                        showEmptyView()
-                    }
-                    is FavoritesState.Error -> {
-                        binding?.containerLoading?.isVisible = false
-                        showErrorView()
-                    }
-                    is FavoritesState.Success -> {
-                        binding?.containerLoading?.isVisible = false
-                        adapter?.movies = state.data
+                binding.bindSafely {
+                    when (state) {
+                        FavoritesState.Loading -> {
+                            containerLoading.isVisible = true
+                            containerFeedback.isVisible = false
+                        }
+                        FavoritesState.Empty -> {
+                            containerLoading.isVisible = false
+                            adapter?.movies = emptyList()
+                            showEmptyView()
+                        }
+                        is FavoritesState.Error -> {
+                            containerLoading.isVisible = false
+                            showErrorView()
+                        }
+                        is FavoritesState.Success -> {
+                            containerLoading.isVisible = false
+                            adapter?.movies = state.data
+                        }
                     }
                 }
             }

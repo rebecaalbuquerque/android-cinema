@@ -43,7 +43,6 @@ class MoviesLocalDataSourceImpl(
             .addTag("MOVIE_REMINDER_${movie.id}")
             .setInputData(
                 workDataOf(
-                    "title" to "Cinema",
                     "message" to "Lembre de assistir ao filme ${movie.title}"
                 )
             ).build()

@@ -7,7 +7,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.albuquerque.cinema.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainAppActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 

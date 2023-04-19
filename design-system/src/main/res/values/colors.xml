@@ -8,4 +8,5 @@
     <color name="blue_lighten_5">#75A4FE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

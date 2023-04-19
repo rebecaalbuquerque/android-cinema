@@ -12,7 +12,7 @@ class ToggleFavoriteUseCase(
             isFavorite = !movie.isFavorite
         )
 
-        repository.updateFavorite(movieUpdated)
+        repository.updateMovie(movieUpdated)
 
         return movieUpdated
     }

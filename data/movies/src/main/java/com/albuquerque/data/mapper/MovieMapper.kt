@@ -12,7 +12,8 @@ internal fun MovieResponse.toMovie(): Movie {
         title = title.orEmpty(),
         overview = overview.orEmpty(),
         releaseDate = releaseDate.orEmpty(),
-        isFavorite = false
+        isFavorite = false,
+        hasReminder = false
     )
 }
 
@@ -29,7 +30,8 @@ internal fun Movie.toEntity(): MovieEntity {
         title = title,
         overview = overview,
         releaseDate = releaseDate,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        hasReminder = hasReminder
     )
 }
 
@@ -39,6 +41,7 @@ internal fun MovieEntity.toMovie(): Movie {
         title = title.orEmpty(),
         overview = overview.orEmpty(),
         releaseDate = releaseDate.orEmpty(),
-        isFavorite = isFavorite ?: false
+        isFavorite = isFavorite ?: false,
+        hasReminder = hasReminder ?: false
     )
 }

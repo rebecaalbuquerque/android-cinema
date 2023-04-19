@@ -25,11 +25,14 @@ internal class MoviesUpcomingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesUpcomingBinding.inflate(inflater, container, false)
         adapter = MoviesUpcomingAdapter().apply {
-            onMovieClick = {
-                viewModel.onItemClick(it.id)
+            onMovieClick = { movie ->
+                viewModel.onItemClick(movie.id)
             }
             onFavoriteClick = { movie ->
                 viewModel.onFavoriteClick(this.movies, movie)
+            }
+            onReminderClick = { movie ->
+                viewModel.onReminderClick(movie)
             }
         }
         return binding?.root

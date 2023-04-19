@@ -11,8 +11,11 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateFavorite(movieEntity: MovieEntity)
+    suspend fun insert(movieEntity: MovieEntity)
 
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
     fun getFavorites(): Flow<List<MovieEntity>>
+
+    @Query("SELECT * FROM movies WHERE hasReminder = 1")
+    fun getReminders(): Flow<List<MovieEntity>>
 }

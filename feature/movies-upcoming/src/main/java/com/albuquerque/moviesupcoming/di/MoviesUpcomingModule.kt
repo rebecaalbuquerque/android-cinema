@@ -14,6 +14,7 @@ val moviesUpcomingPresentationModules = module {
         MoviesUpcomingViewModel(
             getUpcomingMoviesUseCase = GetUpcomingMoviesUseCase(repository = get()),
             toggleFavoriteUseCase = get(),
+            toggleReminderUseCase = get(),
             updateUpcomingMoviesFavoriteUseCase = UpdateUpcomingMoviesFavoriteUseCase()
         )
     }

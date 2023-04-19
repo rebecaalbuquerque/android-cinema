@@ -1,14 +1,14 @@
 package com.albuquerque.data.di
 
 import androidx.room.Room
-import com.albuquerque.data.remote.MoviesApi
+import androidx.work.WorkManager
 import com.albuquerque.data.core.interceptor.ApiInterceptor
 import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesLocalDataSourceImpl
 import com.albuquerque.data.datasource.MoviesRemoteDataSource
 import com.albuquerque.data.datasource.MoviesRemoteDataSourceImpl
-import com.albuquerque.data.local.MovieDao
 import com.albuquerque.data.local.MoviesDatabase
+import com.albuquerque.data.remote.MoviesApi
 import com.albuquerque.data.repository.MoviesRepositoryImpl
 import com.albuquerque.domain.repository.MoviesRepository
 import com.google.gson.Gson
@@ -74,7 +74,12 @@ val moviesDataModule = module {
     factory { get<Retrofit>().create(MoviesApi::class.java) }
 
     factory<MoviesRemoteDataSource> { MoviesRemoteDataSourceImpl(api = get()) }
-    factory<MoviesLocalDataSource> { MoviesLocalDataSourceImpl(dao = get()) }
+    factory<MoviesLocalDataSource> {
+        MoviesLocalDataSourceImpl(
+            dao = get(),
+            workManager = WorkManager.getInstance(androidApplication())
+        )
+    }
 
     factory<MoviesRepository> {
         MoviesRepositoryImpl(remoteDataSource = get(), localDataSource = get())

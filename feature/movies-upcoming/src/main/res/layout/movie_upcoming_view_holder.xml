@@ -18,31 +18,63 @@
         app:layout_constraintEnd_toStartOf="@id/favorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="title" />
 
     <TextView
         android:id="@+id/overview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/release_date"
         app:layout_constraintEnd_toStartOf="@id/favorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="overview" />
 
-    <ImageView
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/favorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overview"
+        tools:text="release date" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ds_ripple_image_button"
         android:contentDescription="Favoritar"
         android:padding="12dp"
         android:src="@drawable/ds_ic_favorite_outline"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:tint="@color/blue_base"
+        app:layout_constraintBottom_toTopOf="@id/remider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/colorPrimaryVariant" />
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/remider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ds_ripple_image_button"
+        android:contentDescription="Criar lembrete"
+        android:padding="12dp"
+        android:src="@drawable/ds_ic_reminder_outline"
+        android:tint="@color/blue_base"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

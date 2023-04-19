@@ -19,5 +19,8 @@ data class MovieEntity(
     val releaseDate: String? = null,
 
     @ColumnInfo(name = "isFavorite")
-    val isFavorite: Boolean? = null
+    val isFavorite: Boolean? = null,
+
+    @ColumnInfo(name = "hasReminder")
+    val hasReminder: Boolean? = null
 )

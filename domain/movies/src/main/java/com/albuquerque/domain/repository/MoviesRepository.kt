@@ -5,7 +5,14 @@ import com.albuquerque.domain.model.MovieList
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    fun getUpcomingMovies(): Flow<MovieList>
-    suspend fun updateFavorite(movie: Movie)
+
+    fun getUpcomingMovies(currentTimeInMillis: Long): Flow<MovieList>
+
+    suspend fun updateMovie(movie: Movie)
+
     fun getFavorites(): Flow<List<Movie>>
+
+    fun createMovieReminder(delayReminder: Long, reminderDay: Int, movie: Movie): Flow<Unit>
+
+    fun deleteMovieReminder(movie: Movie): Flow<Unit>
 }

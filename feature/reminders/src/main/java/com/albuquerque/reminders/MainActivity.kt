@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.albuquerque.reminders.databinding.ActivityRemindersMainBinding
 
-internal class RemindersMainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRemindersMainBinding
 

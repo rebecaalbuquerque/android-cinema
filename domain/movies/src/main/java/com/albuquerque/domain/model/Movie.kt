@@ -5,5 +5,7 @@ data class Movie(
     val title: String,
     val overview: String,
     val releaseDate: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val hasReminder: Boolean,
+    val canCreateReminder: Boolean = true
 )

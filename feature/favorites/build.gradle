@@ -1,7 +1,7 @@
 apply from: rootProject.file('gradle/common.gradle')
 
 dependencies {
-    implementation project(':design-system')
+    implementation project(':core:design-system')
     implementation project(":navigation")
     implementation project(":domain:movies")
 

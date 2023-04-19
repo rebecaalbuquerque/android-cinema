@@ -15,7 +15,8 @@ dependencyResolutionManagement {
 rootProject.name = "Cinema"
 include ':app'
 include ':navigation'
-include ':design-system'
+include ':core:design-system'
+include ':core:common'
 include ':feature:movies-upcoming'
 include ':feature:favorites'
 include ':feature:reminders'

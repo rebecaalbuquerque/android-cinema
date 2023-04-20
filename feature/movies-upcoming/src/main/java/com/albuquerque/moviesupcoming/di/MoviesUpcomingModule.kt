@@ -1,7 +1,6 @@
 package com.albuquerque.moviesupcoming.di
 
 import com.albuquerque.moviesupcoming.domain.usecase.GetUpcomingMoviesUseCase
-import com.albuquerque.moviesupcoming.domain.usecase.UpdateUpcomingMoviesFavoriteUseCase
 import com.albuquerque.moviesupcoming.navigation.MoviesUpcomingNavigationImpl
 import com.albuquerque.moviesupcoming.presentation.MoviesUpcomingViewModel
 import com.albuquerque.navigation.moviesupcoming.MoviesUpcomingNavigation
@@ -14,8 +13,7 @@ val moviesUpcomingPresentationModules = module {
         MoviesUpcomingViewModel(
             getUpcomingMoviesUseCase = GetUpcomingMoviesUseCase(repository = get()),
             toggleFavoriteUseCase = get(),
-            toggleReminderUseCase = get(),
-            updateUpcomingMoviesFavoriteUseCase = UpdateUpcomingMoviesFavoriteUseCase()
+            toggleReminderUseCase = get()
         )
     }
 }

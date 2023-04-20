@@ -29,7 +29,7 @@ internal class MoviesUpcomingFragment : Fragment() {
                 viewModel.onItemClick(movie.id)
             }
             onFavoriteClick = { movie ->
-                viewModel.onFavoriteClick(this.movies, movie)
+                viewModel.onFavoriteClick(movie)
             }
             onReminderClick = { movie ->
                 viewModel.onReminderClick(movie)

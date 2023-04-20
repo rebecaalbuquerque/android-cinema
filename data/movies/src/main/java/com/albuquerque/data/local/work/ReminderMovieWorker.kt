@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,24 +19,25 @@ internal class ReminderMovieWorker(
 
     companion object {
         private const val CHANNEL_ID = "ReminderNotificationChannel"
-        private const val NOTIFICATION_ID = 1
-        private const val MAIN_APP_CLASS = "com.albuquerque.cinema.MainAppActivity"
     }
 
     override fun doWork(): Result {
         try {
             createNotification(
-                inputData.getString("message").orEmpty()
+                message = inputData.getString("message").orEmpty(),
+                deeplink = inputData.getString("deeplink").orEmpty(),
+                notificationId = inputData.getString("notificationId").orEmpty().hashCode()
             )
         } catch (_: Exception) {}
 
         return Result.success()
     }
-    private fun createNotification(message: String) {
+    private fun createNotification(message: String, deeplink: String, notificationId: Int) {
         createNotificationChannel()
 
-        val activity = Class.forName(MAIN_APP_CLASS)
-        val intent = Intent(context, activity).apply {
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(deeplink)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
@@ -47,6 +49,7 @@ internal class ReminderMovieWorker(
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setAutoCancel(true)
             .setSmallIcon(com.albuquerque.common.R.drawable.ic_movie_notification)
             .setContentTitle(
                 context.resources.getString(com.albuquerque.common.R.string.common_title_notification)
@@ -58,7 +61,7 @@ internal class ReminderMovieWorker(
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        NotificationManagerCompat.from(context).notify(notificationId, notification)
     }
 
     private fun createNotificationChannel() {

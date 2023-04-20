@@ -5,6 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.albuquerque.common.deeplink.CinemaDeeplink
 import com.albuquerque.data.local.MovieDao
 import com.albuquerque.data.local.work.ReminderMovieWorker
 import com.albuquerque.data.mapper.toEntity
@@ -43,12 +44,14 @@ class MoviesLocalDataSourceImpl(
             .addTag("MOVIE_REMINDER_${movie.id}")
             .setInputData(
                 workDataOf(
-                    "message" to "Lembre de assistir ao filme ${movie.title}"
+                    "message" to "Lembre de assistir ao filme ${movie.title}",
+                    "deeplink" to CinemaDeeplink.Reminders.Home.url,
+                    "notificationId" to "${movie.id}_D${reminderDay}".hashCode()
                 )
             ).build()
 
         val createWork = workManager.enqueueUniqueWork(
-            "MOVIE_REMINDER_${movie.id}_{D${reminderDay}}",
+            "MOVIE_REMINDER_${movie.id}_D${reminderDay}",
             ExistingWorkPolicy.REPLACE,
             work
         )

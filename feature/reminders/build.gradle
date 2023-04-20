@@ -3,6 +3,8 @@ apply from: rootProject.file('gradle/common.gradle')
 dependencies {
     implementation project(":navigation")
     implementation project(":domain:movies")
+    implementation project(":core:design-system")
+    implementation project(":core:common")
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'

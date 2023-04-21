@@ -4,10 +4,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun String.toBrazilianDate(): String {
-    var date = ""
+    var date = this
 
     try {
-        date = SimpleDateFormat("yyyy-MM-dd", Locale("pt", "BR")).format(this.asDate())
+        date = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(this.asDate())
     } catch (_: Exception) {}
 
     return date

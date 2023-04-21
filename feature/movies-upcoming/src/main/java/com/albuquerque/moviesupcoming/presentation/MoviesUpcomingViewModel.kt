@@ -40,7 +40,7 @@ internal class MoviesUpcomingViewModel(
     }
 
     fun onFavoriteClick(movie: Movie) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             toggleFavoriteUseCase(movie)
         }
     }

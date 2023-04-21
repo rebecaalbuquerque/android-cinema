@@ -1,5 +1,6 @@
 package com.albuquerque.moviesupcoming.presentation.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,7 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.albuquerque.domain.model.Movie
 import com.albuquerque.moviesupcoming.databinding.MovieUpcomingViewHolderBinding
 
-internal class MoviesUpcomingAdapter : RecyclerView.Adapter<MoviesUpcomingViewHolder>() {
+internal class MoviesUpcomingAdapter(
+    private var onMovieClick: ((Movie) -> Unit),
+    private var onFavoriteClick: ((Movie) -> Unit),
+    private var onReminderClick: ((Movie) -> Unit)
+) : RecyclerView.Adapter<MoviesUpcomingViewHolder>() {
+
+    companion object {
+        const val ARG_IS_FAVORITE = "ARG_IS_FAVORITE"
+        const val ARG_HAS_REMINDER = "ARG_HAS_REMINDER"
+    }
 
     var movies = emptyList<Movie>()
         set(value) {
@@ -17,28 +27,28 @@ internal class MoviesUpcomingAdapter : RecyclerView.Adapter<MoviesUpcomingViewHo
             diffUtilResult.dispatchUpdatesTo(this)
         }
 
-    var onMovieClick: ((Movie) -> Unit)? = null
-    var onFavoriteClick: ((Movie) -> Unit)? = null
-    var onReminderClick: ((Movie) -> Unit)? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesUpcomingViewHolder {
         val view = MovieUpcomingViewHolderBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return MoviesUpcomingViewHolder(view)
+        return MoviesUpcomingViewHolder(view, onMovieClick, onFavoriteClick, onReminderClick)
     }
 
     override fun getItemCount(): Int =
         movies.size
 
     override fun onBindViewHolder(holder: MoviesUpcomingViewHolder, position: Int) {
-        holder.bind(
-            movies[position],
-            onMovieClick,
-            onFavoriteClick,
-            onReminderClick
-        )
+        onBindViewHolder(holder, position, mutableListOf())
     }
 
+    override fun onBindViewHolder(holder: MoviesUpcomingViewHolder, position: Int, payloads: MutableList<Any>) {
+        val bundle = payloads.firstOrNull() as? Bundle
+
+        if (payloads.isEmpty() || bundle == null) {
+            holder.bind(movies[position])
+        } else {
+            holder.bindUpdate(bundle)
+        }
+    }
 
 }

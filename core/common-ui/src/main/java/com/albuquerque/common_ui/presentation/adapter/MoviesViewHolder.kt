@@ -9,6 +9,7 @@ import com.albuquerque.designsystem.R
 import com.albuquerque.domain.model.Movie
 
 @Deprecated("Use GenericMoviesAdapter instead.")
+// TODO após remover esta classe, remover a dependência deste modulo com o módulo de DS
 class MoviesViewHolder(
     private val binding: CommonUiMovieViewHolderBinding,
     private val onMovieClick: ((Movie) -> Unit),

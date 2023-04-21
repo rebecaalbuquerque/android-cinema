@@ -10,12 +10,12 @@ import com.albuquerque.domain.model.Movie
 
 class GenericMoviesAdapter<VH : RecyclerView.ViewHolder, VB : ViewBinding>(
     private val inflate: (layoutInflater: LayoutInflater, parent: ViewGroup, attach: Boolean) -> VB,
-    private val viewHolder: (binding: VB, onMovieClick: (Movie) -> Unit, onFavoriteClick: (Movie) -> Unit, onReminderClick: (Movie) -> Unit) -> VH,
+    private val viewHolder: (binding: VB, onMovieClick: ((Movie) -> Unit)?, onFavoriteClick: ((Movie) -> Unit)?, onReminderClick: ((Movie) -> Unit)?) -> VH,
     private val onBinding: (holder: VH, movie: Movie) -> Unit,
     private val onBindingUpdate: (holder: VH, bundle: Bundle) -> Unit,
-    private var onMovieClick: ((Movie) -> Unit),
-    private var onFavoriteClick: ((Movie) -> Unit),
-    private var onReminderClick: ((Movie) -> Unit)
+    private var onMovieClick: ((Movie) -> Unit)? = null,
+    private var onFavoriteClick: ((Movie) -> Unit)? = null,
+    private var onReminderClick: ((Movie) -> Unit)? = null
 ) : RecyclerView.Adapter<VH>() {
 
     var movies = emptyList<Movie>()

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.albuquerque.common.extension.toBrazilianDate
-import com.albuquerque.common_ui.extension.onClickListener
 import com.albuquerque.common_ui.presentation.adapter.MoviesDiffUtil
 import com.albuquerque.designsystem.R
 import com.albuquerque.domain.model.Movie
@@ -12,27 +11,27 @@ import com.albuquerque.moviesupcoming.databinding.MovieUpcomingViewHolderBinding
 
 class MoviesUpcomingViewHolder(
     private val binding: MovieUpcomingViewHolderBinding,
-    private val onMovieClick: ((Movie) -> Unit),
-    private val onFavoriteClick: ((Movie) -> Unit),
-    private val onReminderClick: ((Movie) -> Unit)
+    private val onMovieClick: ((Movie) -> Unit)? = null,
+    private val onFavoriteClick: ((Movie) -> Unit)? = null,
+    private val onReminderClick: ((Movie) -> Unit)? = null
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var currentMovie: Movie? = null
 
     init {
-        binding.root.onClickListener {
+        binding.root.setOnClickListener {
             currentMovie?.let {
-                onMovieClick(it)
+                onMovieClick?.invoke(it)
             }
         }
-        binding.favorite.onClickListener {
+        binding.favorite.setOnClickListener {
             currentMovie?.let {
-                onFavoriteClick(it)
+                onFavoriteClick?.invoke(it)
             }
         }
-        binding.reminder.onClickListener {
+        binding.reminder.setOnClickListener {
             currentMovie?.let {
-                onReminderClick(it)
+                onReminderClick?.invoke(it)
             }
         }
     }

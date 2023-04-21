@@ -11,9 +11,8 @@ import com.albuquerque.reminders.databinding.MovieReminderViewHolderBinding
 
 class ReminderViewHolder(
     private val binding: MovieReminderViewHolderBinding,
-    private val onMovieClick: ((Movie) -> Unit),
-    private val onFavoriteClick: ((Movie) -> Unit),
-    private val onReminderClick: ((Movie) -> Unit)
+    private val onMovieClick: ((Movie) -> Unit)? = null,
+    private val onReminderClick: ((Movie) -> Unit)? = null
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var currentMovie: Movie? = null
@@ -21,12 +20,12 @@ class ReminderViewHolder(
     init {
         binding.root.setOnClickListener {
             currentMovie?.let {
-                onMovieClick(it)
+                onMovieClick?.invoke(it)
             }
         }
         binding.reminder.setOnClickListener {
             currentMovie?.let {
-                onReminderClick(it)
+                onReminderClick?.invoke(it)
             }
         }
     }

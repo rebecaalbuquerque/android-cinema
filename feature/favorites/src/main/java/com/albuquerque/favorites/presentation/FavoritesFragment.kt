@@ -30,8 +30,8 @@ internal class FavoritesFragment : Fragment() {
             inflate = { layoutInflater, parent, attach ->
                 MovieFavoriteViewHolderBinding.inflate(layoutInflater, parent, attach)
             },
-            viewHolder = { binding, onMovieClick, onFavoriteClick, onReminderClick ->
-                FavoritesViewHolder(binding, onMovieClick, onFavoriteClick, onReminderClick)
+            viewHolder = { binding, onMovieClick, onFavoriteClick, _ ->
+                FavoritesViewHolder(binding, onMovieClick, onFavoriteClick)
             },
             onBinding = { holder, movie ->
                 holder.bind(movie)
@@ -40,8 +40,7 @@ internal class FavoritesFragment : Fragment() {
                 holder.bindUpdate(bundle)
             },
             onMovieClick = { viewModel.onItemClick(it.id) },
-            onFavoriteClick = { viewModel.onFavoriteClick(it) },
-            onReminderClick = {}
+            onFavoriteClick = { viewModel.onFavoriteClick(it) }
         )
         return binding?.root
     }

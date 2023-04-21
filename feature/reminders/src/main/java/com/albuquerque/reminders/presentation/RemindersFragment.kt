@@ -30,8 +30,8 @@ internal class RemindersFragment : Fragment() {
             inflate = { layoutInflater, parent, attach ->
                 MovieReminderViewHolderBinding.inflate(layoutInflater, parent, attach)
             },
-            viewHolder = { binding, onMovieClick, onFavoriteClick, onReminderClick ->
-                ReminderViewHolder(binding, onMovieClick, onFavoriteClick, onReminderClick)
+            viewHolder = { binding, onMovieClick, _, onReminderClick ->
+                ReminderViewHolder(binding, onMovieClick, onReminderClick)
             },
             onBinding = { holder, movie ->
                 holder.bind(movie)
@@ -40,7 +40,6 @@ internal class RemindersFragment : Fragment() {
                 holder.bindUpdate(bundle)
             },
             onMovieClick = { viewModel.onItemClick(it.id) },
-            onFavoriteClick = {},
             onReminderClick = { viewModel.onReminderClick(it) }
         )
         return binding?.root

@@ -5,6 +5,7 @@ dependencies {
     implementation project(":domain:movies")
     implementation project(":core:design-system")
     implementation project(":core:common")
+    implementation project(":core:common-ui")
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'

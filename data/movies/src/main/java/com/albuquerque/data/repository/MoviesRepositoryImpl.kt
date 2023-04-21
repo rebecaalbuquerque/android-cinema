@@ -65,6 +65,10 @@ class MoviesRepositoryImpl(
         return localDataSource.getFavorites()
     }
 
+    override fun getReminders(): Flow<List<Movie>> {
+        return localDataSource.getReminders()
+    }
+
     override fun createMovieReminder(delayReminder: Long, reminderDay: Int, movie: Movie): Flow<Unit> {
         return localDataSource.createMovieReminder(delayReminder, reminderDay, movie)
     }

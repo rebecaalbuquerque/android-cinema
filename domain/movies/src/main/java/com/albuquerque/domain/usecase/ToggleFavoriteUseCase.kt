@@ -7,7 +7,7 @@ class ToggleFavoriteUseCase(
     private val repository: MoviesRepository
 ) {
 
-    suspend operator fun invoke( movie: Movie): Movie {
+    suspend operator fun invoke(movie: Movie): Movie {
         val movieUpdated = movie.copy(
             isFavorite = !movie.isFavorite
         )

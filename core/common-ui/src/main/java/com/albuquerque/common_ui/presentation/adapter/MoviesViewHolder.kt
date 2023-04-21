@@ -1,15 +1,16 @@
-package com.albuquerque.moviesupcoming.presentation.adapter
+package com.albuquerque.common_ui.presentation.adapter
 
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.albuquerque.common_ui.databinding.CommonUiMovieViewHolderBinding
+import com.albuquerque.common_ui.extension.onClickListener
 import com.albuquerque.designsystem.R
-import com.albuquerque.designsystem.extension.onClickListener
 import com.albuquerque.domain.model.Movie
-import com.albuquerque.moviesupcoming.databinding.MovieUpcomingViewHolderBinding
 
-internal class MoviesUpcomingViewHolder(
-    private val binding: MovieUpcomingViewHolderBinding,
+@Deprecated("Use GenericMoviesAdapter instead.")
+class MoviesViewHolder(
+    private val binding: CommonUiMovieViewHolderBinding,
     private val onMovieClick: ((Movie) -> Unit),
     private val onFavoriteClick: ((Movie) -> Unit),
     private val onReminderClick: ((Movie) -> Unit)
@@ -50,8 +51,8 @@ internal class MoviesUpcomingViewHolder(
 
     fun bindUpdate(bundle: Bundle) = with(binding) {
         currentMovie = currentMovie?.copy(
-            isFavorite = bundle.getBoolean(MoviesUpcomingAdapter.ARG_IS_FAVORITE),
-            hasReminder = bundle.getBoolean(MoviesUpcomingAdapter.ARG_HAS_REMINDER)
+            isFavorite = bundle.getBoolean(MoviesDiffUtil.ARG_IS_FAVORITE),
+            hasReminder = bundle.getBoolean(MoviesDiffUtil.ARG_HAS_REMINDER)
         )
         setupButtons()
     }

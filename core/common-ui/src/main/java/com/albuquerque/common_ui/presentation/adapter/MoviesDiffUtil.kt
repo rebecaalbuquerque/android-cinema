@@ -1,13 +1,18 @@
-package com.albuquerque.moviesupcoming.presentation.adapter
+package com.albuquerque.common_ui.presentation.adapter
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.albuquerque.domain.model.Movie
 
-internal class MoviesUpcomingDiffUtil(
+class MoviesDiffUtil(
     private val old: List<Movie>,
     private val new: List<Movie>
 ) : DiffUtil.Callback() {
+
+    companion object {
+        const val ARG_IS_FAVORITE = "ARG_IS_FAVORITE"
+        const val ARG_HAS_REMINDER = "ARG_HAS_REMINDER"
+    }
 
     override fun getOldListSize(): Int =
         old.size
@@ -31,8 +36,8 @@ internal class MoviesUpcomingDiffUtil(
             super.getChangePayload(oldItemPosition, newItemPosition)
         } else {
             Bundle().apply {
-                putBoolean(MoviesUpcomingAdapter.ARG_IS_FAVORITE, newItem.isFavorite)
-                putBoolean(MoviesUpcomingAdapter.ARG_HAS_REMINDER, newItem.hasReminder)
+                putBoolean(ARG_IS_FAVORITE, newItem.isFavorite)
+                putBoolean(ARG_HAS_REMINDER, newItem.hasReminder)
             }
         }
 

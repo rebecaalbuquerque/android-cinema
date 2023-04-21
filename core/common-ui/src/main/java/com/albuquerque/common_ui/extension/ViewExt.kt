@@ -1,4 +1,4 @@
-package com.albuquerque.designsystem.extension
+package com.albuquerque.common_ui.extension
 
 import android.view.View
 import android.view.ViewGroup

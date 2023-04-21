@@ -9,31 +9,39 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.albuquerque.common_ui.presentation.adapter.GenericMoviesAdapter
 import com.albuquerque.designsystem.extension.bindSafely
 import com.albuquerque.designsystem.extension.toastShort
 import com.albuquerque.moviesupcoming.databinding.FragmentMoviesUpcomingBinding
-import com.albuquerque.moviesupcoming.presentation.adapter.MoviesUpcomingAdapter
+import com.albuquerque.moviesupcoming.databinding.MovieUpcomingViewHolderBinding
+import com.albuquerque.moviesupcoming.presentation.viewholder.MoviesUpcomingViewHolder
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class MoviesUpcomingFragment : Fragment() {
 
     internal var binding: FragmentMoviesUpcomingBinding? = null
-    private var adapter: MoviesUpcomingAdapter? = null
+    private var adapter: GenericMoviesAdapter<MoviesUpcomingViewHolder, MovieUpcomingViewHolderBinding>? = null
     private val viewModel: MoviesUpcomingViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesUpcomingBinding.inflate(inflater, container, false)
-        adapter = MoviesUpcomingAdapter(
-            onMovieClick = { movie ->
-                viewModel.onItemClick(movie.id)
+        adapter = GenericMoviesAdapter(
+            inflate = { layoutInflater, parent, attach ->
+                MovieUpcomingViewHolderBinding.inflate(layoutInflater, parent, attach)
             },
-            onFavoriteClick = { movie ->
-                viewModel.onFavoriteClick(movie)
+            viewHolder = { binding, onMovieClick, onFavoriteClick, onReminderClick ->
+                MoviesUpcomingViewHolder(binding, onMovieClick, onFavoriteClick, onReminderClick)
             },
-            onReminderClick = { movie ->
-                viewModel.onReminderClick(movie)
-            }
+            onBinding = { holder, movie ->
+                holder.bind(movie)
+            },
+            onBindingUpdate = { holder, bundle ->
+                holder.bindUpdate(bundle)
+            },
+            onMovieClick = { viewModel.onItemClick(it.id) },
+            onFavoriteClick = { viewModel.onFavoriteClick(it) },
+            onReminderClick = { viewModel.onReminderClick(it) }
         )
         return binding?.root
     }

@@ -34,6 +34,7 @@ dependencies {
 
     implementation project(":navigation")
     implementation project(':core:common')
+    implementation project(':core:common-ui')
     implementation project(':core:design-system')
     implementation project(":data:movies")
     implementation project(":domain:movies")

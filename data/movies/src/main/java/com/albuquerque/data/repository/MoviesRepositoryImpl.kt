@@ -2,8 +2,8 @@ package com.albuquerque.data.repository
 
 import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesRemoteDataSource
-import com.albuquerque.data.extension.asDate
-import com.albuquerque.data.extension.isBiggerThan
+import com.albuquerque.common.extension.asDate
+import com.albuquerque.common.extension.isBiggerThan
 import com.albuquerque.data.mapper.toMovieList
 import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.model.MovieList

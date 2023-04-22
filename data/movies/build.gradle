@@ -9,8 +9,6 @@ android {
         }
 
         def apiKey = System.getenv("API_KEY") ?: localProperties["API_KEY"]
-        println("System.getenv")
-        println(System.getenv("API_KEY"))
         buildConfigField "String", "API_KEY", "\"${apiKey}\""
     }
 }

@@ -3,9 +3,13 @@ apply plugin: 'kotlin-kapt'
 
 android {
     defaultConfig {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
+        Properties localProperties = new Properties()
+        if (file(project.rootProject.file("local.properties")).exists()) {
+            localProperties.load(new FileInputStream(file(project.rootProject.file("local.properties"))))
+        }
+
+        def apiKey = System.getenv("API_KEY") ?: localProperties["API_KEY"]
+        buildConfigField "String", "API_KEY", "\"${apiKey}\""
     }
 }
 

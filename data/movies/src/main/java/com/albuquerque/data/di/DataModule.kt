@@ -1,7 +1,7 @@
 package com.albuquerque.data.di
 
 import androidx.room.Room
-import androidx.work.WorkManager
+import com.albuquerque.common.remindermanager.CinemaReminderManagerImpl
 import com.albuquerque.data.core.interceptor.ApiInterceptor
 import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesLocalDataSourceImpl
@@ -77,7 +77,7 @@ val moviesDataModule = module {
     factory<MoviesLocalDataSource> {
         MoviesLocalDataSourceImpl(
             dao = get(),
-            workManager = WorkManager.getInstance(androidApplication())
+            cinemaReminderManager = CinemaReminderManagerImpl(androidApplication())
         )
     }
 

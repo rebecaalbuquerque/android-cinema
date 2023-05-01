@@ -1,25 +1,18 @@
 package com.albuquerque.data.datasource
 
-import androidx.lifecycle.asFlow
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.albuquerque.common.deeplink.CinemaDeeplink
+import com.albuquerque.common.remindermanager.CinemaReminderManager
 import com.albuquerque.data.local.MovieDao
-import com.albuquerque.data.local.work.ReminderMovieWorker
 import com.albuquerque.data.mapper.toEntity
 import com.albuquerque.data.mapper.toMovie
 import com.albuquerque.domain.model.Movie
-import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.zip
 
 class MoviesLocalDataSourceImpl(
     private val dao: MovieDao,
-    private val workManager: WorkManager
+    private val cinemaReminderManager: CinemaReminderManager
 ) : MoviesLocalDataSource {
 
     override suspend fun updateFavorite(movie: Movie) {
@@ -38,43 +31,25 @@ class MoviesLocalDataSourceImpl(
         }
     }
 
-    override fun createMovieReminder(delayReminder: Long, reminderDay: Int, movie: Movie): Flow<Unit> {
-        val work = OneTimeWorkRequestBuilder<ReminderMovieWorker>()
-            .setInitialDelay(delayReminder, TimeUnit.SECONDS)
-            .addTag("MOVIE_REMINDER_${movie.id}")
-            .setInputData(
-                workDataOf(
-                    "message" to "Lembre de assistir ao filme ${movie.title}",
-                    "deeplink" to CinemaDeeplink.Reminders.Home.url,
-                    "notificationId" to "${movie.id}_D${reminderDay}".hashCode()
-                )
-            ).build()
-
-        val createWork = workManager.enqueueUniqueWork(
-            "MOVIE_REMINDER_${movie.id}_D${reminderDay}",
-            ExistingWorkPolicy.REPLACE,
-            work
-        )
-
-        //Transformar em flow e se o state for SUCCESS emite o flow, se não for joga um throw
-        val createWorkFlow = createWork.state.asFlow().map { operation -> }
-
-        val updateFlow = flow {
+    override fun createMovieReminder(reminderInMillis: Long, reminderDay: Int, movie: Movie): Flow<Unit> {
+        return flow {
+            cinemaReminderManager.createNotification(
+                reminderDay = reminderDay,
+                deeplink = CinemaDeeplink.Reminders.Home.url,
+                movieId = "${movie.id}_D${reminderDay}".hashCode(),
+                movieName = movie.title,
+                timeInMillis = reminderInMillis
+            )
             emit(dao.insert(movie.toEntity()))
         }
-
-        return createWorkFlow.zip(updateFlow) {_, _ -> }
     }
 
-    override fun deleteMovieReminder(movie: Movie): Flow<Unit> {
-        val cancelWork = workManager.cancelAllWorkByTag("MOVIE_REMINDER_${movie.id}")
-        val cancelWorkFlow = cancelWork.state.asFlow()
-        val updateFlow = flow {
+    override fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit> {
+        return flow {
+            cinemaReminderManager.deleteNotification(
+                movieId = "${movie.id}_D${reminderDay}".hashCode()
+            )
             emit(dao.insert(movie.toEntity()))
-        }
-
-        return cancelWorkFlow.zip(updateFlow) { cancel, _ ->
-            Unit
         }
     }
 }

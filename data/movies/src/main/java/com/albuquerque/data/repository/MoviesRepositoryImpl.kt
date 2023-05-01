@@ -69,11 +69,11 @@ class MoviesRepositoryImpl(
         return localDataSource.getReminders()
     }
 
-    override fun createMovieReminder(delayReminder: Long, reminderDay: Int, movie: Movie): Flow<Unit> {
-        return localDataSource.createMovieReminder(delayReminder, reminderDay, movie)
+    override fun createMovieReminder(reminderInMillis: Long, reminderDay: Int, movie: Movie): Flow<Unit> {
+        return localDataSource.createMovieReminder(reminderInMillis, reminderDay, movie)
     }
 
-    override fun deleteMovieReminder(movie: Movie): Flow<Unit> {
-        return localDataSource.deleteMovieReminder(movie)
+    override fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit> {
+        return localDataSource.deleteMovieReminder(reminderDay, movie)
     }
 }

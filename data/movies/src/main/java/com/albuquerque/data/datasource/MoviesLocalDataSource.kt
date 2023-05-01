@@ -10,7 +10,7 @@ interface MoviesLocalDataSource {
 
     fun getReminders(): Flow<List<Movie>>
 
-    fun createMovieReminder(delayReminder: Long, reminderDay: Int, movie: Movie): Flow<Unit>
+    fun createMovieReminder(reminderInMillis: Long, reminderDay: Int, movie: Movie): Flow<Unit>
 
-    fun deleteMovieReminder(movie: Movie): Flow<Unit>
+    fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit>
 }

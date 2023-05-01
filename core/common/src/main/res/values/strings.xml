@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="common_title_notification">Cinema app</string>
+    <string name="common_message_notification_D0">Não esqueça de ir ao cinema, o filme %1$s estreia hoje!</string>
+    <string name="common_message_notification_D_minus_2">Lembrete: o filme %1$s estreia depois de amanhã!</string>
+    <string name="common_message_notification_D_minus_6">Passando pra lembrar que o filme %1$s estreia semana que vem!</string>
 </resources>

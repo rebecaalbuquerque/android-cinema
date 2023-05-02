@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.albuquerque.common.R
 
 internal class MovieReminderBroadcast : BroadcastReceiver() {
 
@@ -51,9 +52,9 @@ internal class MovieReminderBroadcast : BroadcastReceiver() {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
-            .setSmallIcon(com.albuquerque.common.R.drawable.ic_movie_notification)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(
-                context.resources.getString(com.albuquerque.common.R.string.common_title_notification)
+                context.resources.getString(R.string.common_title_notification)
             )
             .setContentText(
                 message

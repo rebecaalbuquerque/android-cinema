@@ -3,7 +3,7 @@ package com.albuquerque.moviesupcoming.presentation.viewholder
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.albuquerque.common.extension.toBrazilianDate
+import com.albuquerque.common.extension.formatDate
 import com.albuquerque.common_ui.presentation.adapter.MoviesDiffUtil
 import com.albuquerque.designsystem.R
 import com.albuquerque.domain.model.Movie
@@ -46,7 +46,7 @@ class MoviesUpcomingViewHolder(
         reminder.isVisible = movie.canCreateReminder
         title.text = movie.title
         overview.text = movie.overview
-        releaseDate.text = "Release date ${movie.releaseDate.toBrazilianDate()}"
+        releaseDate.text = "Release date ${movie.releaseDate.formatDate()}"
     }
 
     fun bindUpdate(bundle: Bundle) = with(binding) {

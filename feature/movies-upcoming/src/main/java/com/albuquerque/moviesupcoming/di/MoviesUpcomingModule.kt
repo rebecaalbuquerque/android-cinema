@@ -13,7 +13,8 @@ val moviesUpcomingPresentationModules = module {
         MoviesUpcomingViewModel(
             getUpcomingMoviesUseCase = GetUpcomingMoviesUseCase(repository = get()),
             toggleFavoriteUseCase = get(),
-            toggleReminderUseCase = get()
+            toggleReminderUseCase = get(),
+            tracker = get()
         )
     }
 }

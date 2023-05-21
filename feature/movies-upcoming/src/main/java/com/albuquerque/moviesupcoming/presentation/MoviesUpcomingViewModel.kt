@@ -2,6 +2,9 @@ package com.albuquerque.moviesupcoming.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.albuquerque.analytics.EventName
+import com.albuquerque.analytics.EventTracker
+import com.albuquerque.analytics.PropertiesName
 import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.usecase.ToggleFavoriteUseCase
 import com.albuquerque.domain.usecase.ToggleReminderUseCase
@@ -20,6 +23,7 @@ internal class MoviesUpcomingViewModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val toggleReminderUseCase: ToggleReminderUseCase,
+    private val tracker: EventTracker,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -46,6 +50,13 @@ internal class MoviesUpcomingViewModel(
     }
 
     fun onReminderClick(movie: Movie) {
+        tracker.track(EventName.Button.Clicked.value) {
+            properties {
+                PropertiesName.Button.Screen.value withValue "upcoming_list_screen"
+                PropertiesName.Button.Name.value withValue "upcoming_list_reminder_button"
+            }
+        }
+
         viewModelScope.launch {
             toggleReminderUseCase(movie)
                 .onStart { }

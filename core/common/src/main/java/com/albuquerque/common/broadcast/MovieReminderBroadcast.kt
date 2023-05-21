@@ -10,9 +10,15 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.albuquerque.analytics.EventName
+import com.albuquerque.analytics.EventTracker
+import com.albuquerque.analytics.PropertiesName
 import com.albuquerque.common.R
+import org.koin.java.KoinJavaComponent.inject
 
 internal class MovieReminderBroadcast : BroadcastReceiver() {
+
+    private val tracker by inject<EventTracker>(EventTracker::class.java)
 
     companion object {
         private const val CHANNEL_ID = "ReminderNotificationChannel"
@@ -36,6 +42,7 @@ internal class MovieReminderBroadcast : BroadcastReceiver() {
         val deeplink = receiverIntent?.extras?.getString("deeplink").orEmpty()
         val message = receiverIntent?.extras?.getString("message").orEmpty()
         val notificationId = receiverIntent?.extras?.getInt("notificationId") ?: 0
+        val reminderDay = receiverIntent?.extras?.getInt("reminderDay") ?: -999
 
         val intent = Intent().apply {
             action = Intent.ACTION_VIEW
@@ -62,6 +69,13 @@ internal class MovieReminderBroadcast : BroadcastReceiver() {
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
+
+        tracker.track(EventName.Notification.Received.value) {
+            properties {
+                PropertiesName.Notification.Text.value withValue message
+                PropertiesName.Notification.Status.value withValue "D_${reminderDay}"
+            }
+        }
 
         NotificationManagerCompat.from(context).notify(notificationId, notification)
     }

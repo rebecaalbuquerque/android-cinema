@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation project(":navigation")
+    implementation project(':core:analytics')
     implementation project(':core:common')
     implementation project(':core:common-ui')
     implementation project(':core:design-system')

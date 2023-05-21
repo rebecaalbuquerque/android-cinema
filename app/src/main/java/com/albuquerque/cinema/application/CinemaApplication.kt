@@ -1,6 +1,7 @@
 package com.albuquerque.cinema.application
 
 import android.app.Application
+import com.albuquerque.analytics.analyticsModule
 import com.albuquerque.data.di.databaseModule
 import com.albuquerque.data.di.moviesDataModule
 import com.albuquerque.data.di.networkModule
@@ -11,7 +12,6 @@ import com.albuquerque.reminders.di.remindersPresentationModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-
 class CinemaApplication : Application() {
 
     override fun onCreate() {
@@ -21,6 +21,7 @@ class CinemaApplication : Application() {
             modules(
                 networkModule,
                 databaseModule,
+                analyticsModule,
                 moviesDataModule,
                 moviesDomainModule,
                 moviesUpcomingPresentationModules,

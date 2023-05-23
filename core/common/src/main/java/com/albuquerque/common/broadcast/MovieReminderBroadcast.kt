@@ -42,7 +42,6 @@ internal class MovieReminderBroadcast : BroadcastReceiver() {
         val deeplink = receiverIntent?.extras?.getString("deeplink").orEmpty()
         val message = receiverIntent?.extras?.getString("message").orEmpty()
         val notificationId = receiverIntent?.extras?.getInt("notificationId") ?: 0
-        val reminderDay = receiverIntent?.extras?.getInt("reminderDay") ?: -999
 
         val intent = Intent().apply {
             action = Intent.ACTION_VIEW
@@ -73,7 +72,7 @@ internal class MovieReminderBroadcast : BroadcastReceiver() {
         tracker.track(EventName.Notification.Received.value) {
             properties {
                 PropertiesName.Notification.Text.value withValue message
-                PropertiesName.Notification.Status.value withValue "D_${reminderDay}"
+                PropertiesName.Notification.Status.value withValue notificationId
             }
         }
 

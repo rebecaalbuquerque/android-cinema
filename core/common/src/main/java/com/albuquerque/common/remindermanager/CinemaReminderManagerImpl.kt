@@ -32,7 +32,6 @@ class CinemaReminderManagerImpl(
             putExtra("deeplink", deeplink)
             putExtra("message", context.resources.getString(messageRes, movieName))
             putExtra("notificationId", movieId)
-            putExtra("reminderDay", reminderDay)
         }
 
         val pendingIntent = context.getReminderBroadcast(intent, movieId)

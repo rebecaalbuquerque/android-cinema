@@ -52,8 +52,9 @@ internal class MoviesUpcomingViewModel(
     fun onReminderClick(movie: Movie) {
         tracker.track(EventName.Button.Clicked.value) {
             properties {
-                PropertiesName.Button.Screen.value withValue "upcoming_list_screen"
                 PropertiesName.Button.Name.value withValue "upcoming_list_reminder_button"
+                PropertiesName.Button.Screen.value withValue "upcoming_list_screen"
+                PropertiesName.Button.Status.value withValue movie.title
             }
         }
 

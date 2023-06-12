@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.albuquerque.common.broadcast.MovieReminderBroadcast
+import com.albuquerque.common.extension.addTime
 import com.albuquerque.common.model.MovieReminderDay
+import java.util.*
 
 class CinemaReminderManagerImpl(
     private val context: Context
@@ -36,11 +38,17 @@ class CinemaReminderManagerImpl(
 
         val pendingIntent = context.getReminderBroadcast(intent, movieId)
 
-        alarmManager.set(
+        alarmManager.setWindow(
+            AlarmManager.RTC_WAKEUP,
+            timeInMillis,
+            timeInMillis.addTime(Calendar.MINUTE, 30),
+            pendingIntent
+        )
+        /*alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             timeInMillis,
             pendingIntent
-        )
+        )*/
     }
 
     override fun deleteNotification(movieId: Int) {

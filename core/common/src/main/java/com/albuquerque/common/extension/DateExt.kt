@@ -32,3 +32,10 @@ fun Calendar.addTime(field: Int, amount: Int): Date {
         add(field, amount)
     }.time
 }
+
+fun Long.addTime(field: Int, amount: Int): Long {
+    return Calendar.getInstance().apply {
+        timeInMillis = this@addTime
+        add(field, amount)
+    }.timeInMillis
+}

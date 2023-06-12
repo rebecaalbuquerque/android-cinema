@@ -41,6 +41,9 @@ class MoviesRemoteDataSourceImpl(
                         val movie5 = Calendar.getInstance().addTime(Calendar.DAY_OF_MONTH, 2)
                         val nameMovie5 = fakeMovies.shuffled().take((1..4).random()).joinToString(" ").replaceFirstChar { it.titlecase() }
 
+                        val movie6 = Calendar.getInstance().addTime(Calendar.DAY_OF_MONTH, 1)
+                        val nameMovie6 = fakeMovies.shuffled().take((1..4).random()).joinToString(" ").replaceFirstChar { it.titlecase() }
+
                         add(
                             MovieResponse(
                                 id = nameMovie1.hashCode(),
@@ -83,6 +86,15 @@ class MoviesRemoteDataSourceImpl(
                                 title = nameMovie5,
                                 overview = movie5.asDateString(),
                                 releaseDate = movie5.asDateString("yyyy-MM-dd")
+                            )
+                        )
+
+                        add(
+                            MovieResponse(
+                                id = nameMovie6.hashCode(),
+                                title = nameMovie6,
+                                overview = movie6.asDateString(),
+                                releaseDate = movie6.asDateString("yyyy-MM-dd")
                             )
                         )
                     }

@@ -38,17 +38,17 @@ class CinemaReminderManagerImpl(
 
         val pendingIntent = context.getReminderBroadcast(intent, movieId)
 
-        alarmManager.setWindow(
+        /*alarmManager.setWindow(
             AlarmManager.RTC_WAKEUP,
             timeInMillis,
             timeInMillis.addTime(Calendar.MINUTE, 30),
             pendingIntent
-        )
-        /*alarmManager.set(
+        )*/
+        alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             timeInMillis,
             pendingIntent
-        )*/
+        )
     }
 
     override fun deleteNotification(movieId: Int) {

@@ -2,6 +2,7 @@ package com.albuquerque.cinema.application
 
 import android.app.Application
 import com.albuquerque.analytics.analyticsModule
+import com.albuquerque.common.di.notificationModule
 import com.albuquerque.data.di.databaseModule
 import com.albuquerque.data.di.moviesDataModule
 import com.albuquerque.data.di.networkModule
@@ -21,6 +22,7 @@ class CinemaApplication : Application() {
             modules(
                 networkModule,
                 databaseModule,
+                notificationModule,
                 analyticsModule,
                 moviesDataModule,
                 moviesDomainModule,

@@ -2,17 +2,20 @@ package com.albuquerque.cinema
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.albuquerque.cinema.databinding.ActivityMainBinding
 import com.albuquerque.common.deeplink.CinemaDeeplink
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainAppActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class MainAppActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appUpdateManager: AppUpdateManager
     private var currentTab: String? = null
+    private val viewModel = MainAppViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +40,12 @@ class MainAppActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        checkUpdate(
+        checkAppUpdate(
             onUpdateNotAvailable = {
                 setupMainAppGraph()
             }
         )
+        checkFirebaseToken()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -52,7 +57,7 @@ class MainAppActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkUpdate(onUpdateNotAvailable: () -> Unit) {
+    private fun checkAppUpdate(onUpdateNotAvailable: () -> Unit) {
         if (!BuildConfig.DEBUG) {
             appUpdateManager.appUpdateInfo.addOnSuccessListener { updateInfo ->
                 if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE ||
@@ -71,6 +76,22 @@ class MainAppActivity : AppCompatActivity() {
         } else {
             onUpdateNotAvailable()
         }
+    }
+
+    // todo: checar se não é bloqueante
+    private fun checkFirebaseToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("Teste firebase FCM", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            viewModel.updateFcmToken(task.result)
+        })
+    }
+
+    private fun generateDeviceUUID() {
+
     }
 
     private fun setupMainAppGraph() {

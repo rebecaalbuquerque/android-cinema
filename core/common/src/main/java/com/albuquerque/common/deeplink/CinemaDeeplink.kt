@@ -13,11 +13,11 @@ sealed class CinemaDeeplink(val url: String) {
     object Home : CinemaDeeplink(BASE_URL)
 
     sealed class Favorites(destination: String) : CinemaDeeplink(BASE_URL + destination) {
-        object Home : Favorites(destination = mapOf("tab" to TAB_FAVORITES, "" to "").toQueryParams())
+        object Home : Favorites(destination = mapOf("tab" to TAB_FAVORITES).toQueryParams())
     }
 
     sealed class Reminders(destination: String) : CinemaDeeplink(BASE_URL + destination) {
-        object Home : Favorites(destination = mapOf("tab" to TAB_REMINDERS, "" to "").toQueryParams())
+        object Home : Favorites(destination = mapOf("tab" to TAB_REMINDERS).toQueryParams())
 
     }
 

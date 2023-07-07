@@ -2,8 +2,10 @@ package com.albuquerque.cinema.application
 
 import android.app.Application
 import com.albuquerque.analytics.analyticsModule
+import com.albuquerque.auth.di.authDataModule
+import com.albuquerque.auth.di.authDomainModule
+import com.albuquerque.cinema.di.appModule
 import com.albuquerque.common.di.notificationModule
-import com.albuquerque.data.di.databaseModule
 import com.albuquerque.data.di.moviesDataModule
 import com.albuquerque.data.di.networkModule
 import com.albuquerque.domain.di.moviesDomainModule
@@ -20,11 +22,13 @@ class CinemaApplication : Application() {
         startKoin {
             androidContext(this@CinemaApplication)
             modules(
+                appModule,
                 networkModule,
-                databaseModule,
                 notificationModule,
                 analyticsModule,
+                authDataModule,
                 moviesDataModule,
+                authDomainModule,
                 moviesDomainModule,
                 moviesUpcomingPresentationModules,
                 favoritesPresentationModules,

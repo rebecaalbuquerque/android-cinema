@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.firebase.appdistribution'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,7 +40,9 @@ dependencies {
     implementation project(':core:common')
     implementation project(':core:common-ui')
     implementation project(':core:design-system')
+    implementation project(":data:auth")
     implementation project(":data:movies")
+    implementation project(":domain:auth")
     implementation project(":domain:movies")
     implementation project(":feature:movies-upcoming")
     implementation project(":feature:favorites")
@@ -59,6 +62,11 @@ dependencies {
     implementation 'com.google.android.play:app-update-ktx:2.0.1'
 
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
+
+    implementation "androidx.room:room-ktx:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

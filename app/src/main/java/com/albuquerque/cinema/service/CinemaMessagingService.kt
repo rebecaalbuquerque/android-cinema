@@ -1,14 +1,16 @@
 package com.albuquerque.cinema.service
 
 import android.util.Log
+import com.albuquerque.auth.domain.SaveFcmTokenUseCase
 import com.albuquerque.common.notification.CinemaNotificationManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
 class CinemaMessagingService : FirebaseMessagingService() {
 
-    private val notificationManager by KoinJavaComponent.inject<CinemaNotificationManager>(CinemaNotificationManager::class.java)
+    private val saveFcmTokenUseCase by inject<SaveFcmTokenUseCase>(SaveFcmTokenUseCase::class.java)
+    private val notificationManager by inject<CinemaNotificationManager>(CinemaNotificationManager::class.java)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d("Cinema App FCM", "onMessageReceived")
@@ -25,5 +27,6 @@ class CinemaMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         Log.d("Cinema App FCM" , "onNewToken $token")
+        saveFcmTokenUseCase.invoke(token = token, isNewToken = true)
     }
 }

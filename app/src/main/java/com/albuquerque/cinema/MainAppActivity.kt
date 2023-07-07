@@ -16,6 +16,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.UUID
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainAppActivity : AppCompatActivity() {
 
@@ -26,7 +28,7 @@ class MainAppActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appUpdateManager: AppUpdateManager
     private var currentTab: String? = null
-    private val viewModel = MainAppViewModel()
+    private val viewModel: MainAppViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class MainAppActivity : AppCompatActivity() {
             }
         )
         checkFirebaseToken()
+        generateDeviceUUID()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -86,12 +89,12 @@ class MainAppActivity : AppCompatActivity() {
                 return@OnCompleteListener
             }
 
-            viewModel.updateFcmToken(task.result)
+            viewModel.generateFcmToken(task.result)
         })
     }
 
     private fun generateDeviceUUID() {
-
+        viewModel.generateDeviceUuid(uuid = UUID.randomUUID().toString())
     }
 
     private fun setupMainAppGraph() {

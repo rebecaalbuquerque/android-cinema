@@ -1,14 +1,13 @@
 package com.albuquerque.data.di
 
-import androidx.room.Room
 import com.albuquerque.common.remindermanager.CinemaReminderManagerImpl
 import com.albuquerque.data.core.interceptor.ApiInterceptor
 import com.albuquerque.data.datasource.MoviesLocalDataSource
 import com.albuquerque.data.datasource.MoviesLocalDataSourceImpl
 import com.albuquerque.data.datasource.MoviesRemoteDataSource
 import com.albuquerque.data.datasource.MoviesRemoteDataSourceImpl
-import com.albuquerque.data.local.MoviesDatabase
 import com.albuquerque.data.remote.MoviesApi
+import com.albuquerque.data.remote.MoviesNotificationsApi
 import com.albuquerque.data.repository.MoviesRepositoryImpl
 import com.albuquerque.domain.repository.MoviesRepository
 import com.google.gson.Gson
@@ -45,35 +44,36 @@ val networkModule = module {
         RxJava2CallAdapterFactory.create()
     }
 
-    single<Retrofit> {
+    single {
         Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .client(get())
             .addConverterFactory(get<GsonConverterFactory>())
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
+            .create(MoviesApi::class.java)
     }
-}
-
-val databaseModule = module {
 
     single {
-         Room.databaseBuilder(
-            androidApplication(),
-            MoviesDatabase::class.java,
-            "movies-db"
-        ).build()
-    }
-    single {
-        val database = get<MoviesDatabase>()
-        database.moviesDao()
+        Retrofit.Builder()
+            .baseUrl("https://cinema-backend-app-f958bf189e10.herokuapp.com/")
+            .client(get())
+            .addConverterFactory(get<GsonConverterFactory>())
+            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+            .build()
+            .create(MoviesNotificationsApi::class.java)
     }
 }
 
 val moviesDataModule = module {
-    factory { get<Retrofit>().create(MoviesApi::class.java) }
 
-    factory<MoviesRemoteDataSource> { MoviesRemoteDataSourceImpl(api = get()) }
+    factory<MoviesRemoteDataSource> {
+        MoviesRemoteDataSourceImpl(
+            moviesApi = get(),
+            moviesNotificationApi = get()
+        )
+    }
+
     factory<MoviesLocalDataSource> {
         MoviesLocalDataSourceImpl(
             dao = get(),

@@ -7,5 +7,16 @@ data class Movie(
     val releaseDate: String,
     val isFavorite: Boolean,
     val hasReminder: Boolean,
-    val canCreateReminder: Boolean = true
-)
+    val canCreateReminder: Boolean = true,
+    var reminderStatus: String = ReminderStatus.NOT_SCHEDULED.name
+) {
+    enum class ReminderStatus {
+        SCHEDULED, TRYING_TO_SCHEDULE, NOT_SCHEDULED;
+
+        companion object {
+            fun getByValue(value: String?): ReminderStatus {
+                return values().firstOrNull { it.name == value } ?: NOT_SCHEDULED
+            }
+        }
+    }
+}

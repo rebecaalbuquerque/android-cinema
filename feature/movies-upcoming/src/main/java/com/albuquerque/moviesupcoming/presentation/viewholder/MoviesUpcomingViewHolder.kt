@@ -1,6 +1,7 @@
 package com.albuquerque.moviesupcoming.presentation.viewholder
 
 import android.os.Bundle
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.albuquerque.common.extension.formatDate
@@ -52,7 +53,8 @@ class MoviesUpcomingViewHolder(
     fun bindUpdate(bundle: Bundle) = with(binding) {
         currentMovie = currentMovie?.copy(
             isFavorite = bundle.getBoolean(MoviesDiffUtil.ARG_IS_FAVORITE),
-            hasReminder = bundle.getBoolean(MoviesDiffUtil.ARG_HAS_REMINDER)
+            hasReminder = bundle.getBoolean(MoviesDiffUtil.ARG_HAS_REMINDER),
+            reminderStatus = bundle.getString(MoviesDiffUtil.ARG_REMINDER_STATUS, Movie.ReminderStatus.NOT_SCHEDULED.name)
         )
         setupButtons()
     }
@@ -61,8 +63,22 @@ class MoviesUpcomingViewHolder(
         favorite.setImageResource(
             if (currentMovie?.isFavorite == true) R.drawable.ds_ic_favorite else R.drawable.ds_ic_favorite_outline
         )
-        reminder.setImageResource(
-            if (currentMovie?.hasReminder == true) R.drawable.ds_ic_reminder else R.drawable.ds_ic_reminder_outline
-        )
+
+        when (Movie.ReminderStatus.getByValue(currentMovie?.reminderStatus)) {
+            Movie.ReminderStatus.TRYING_TO_SCHEDULE -> {
+                reminder.isInvisible = true
+                reminderLoading.isVisible = true
+            }
+            Movie.ReminderStatus.SCHEDULED -> {
+                reminder.setImageResource(R.drawable.ds_ic_reminder)
+                reminder.isVisible = true
+                reminderLoading.isInvisible = true
+            }
+            Movie.ReminderStatus.NOT_SCHEDULED -> {
+                reminder.setImageResource(R.drawable.ds_ic_reminder_outline)
+                reminder.isVisible = true
+                reminderLoading.isInvisible = true
+            }
+        }
     }
 }

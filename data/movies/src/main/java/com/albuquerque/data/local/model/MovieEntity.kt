@@ -22,5 +22,18 @@ data class MovieEntity(
     val isFavorite: Boolean? = null,
 
     @ColumnInfo(name = "hasReminder")
-    val hasReminder: Boolean? = null
-)
+    val hasReminder: Boolean? = null,
+
+    @ColumnInfo(name = "reminderStatus")
+    val reminderStatus: String = ReminderStatus.NOT_SCHEDULED.name
+) {
+    enum class ReminderStatus {
+        SCHEDULED, TRYING_TO_SCHEDULE, NOT_SCHEDULED;
+
+        companion object {
+            fun getByValue(value: String): ReminderStatus {
+                return values().firstOrNull { it.name == value } ?: NOT_SCHEDULED
+            }
+        }
+    }
+}

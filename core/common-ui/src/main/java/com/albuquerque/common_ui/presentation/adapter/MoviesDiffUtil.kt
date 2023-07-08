@@ -12,6 +12,7 @@ class MoviesDiffUtil(
     companion object {
         const val ARG_IS_FAVORITE = "ARG_IS_FAVORITE"
         const val ARG_HAS_REMINDER = "ARG_HAS_REMINDER"
+        const val ARG_REMINDER_STATUS = "ARG_REMINDER_STATUS"
     }
 
     override fun getOldListSize(): Int =
@@ -38,6 +39,7 @@ class MoviesDiffUtil(
             Bundle().apply {
                 putBoolean(ARG_IS_FAVORITE, newItem.isFavorite)
                 putBoolean(ARG_HAS_REMINDER, newItem.hasReminder)
+                putString(ARG_REMINDER_STATUS, newItem.reminderStatus)
             }
         }
 

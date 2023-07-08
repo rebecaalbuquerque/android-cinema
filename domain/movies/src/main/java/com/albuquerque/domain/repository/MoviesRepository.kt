@@ -17,4 +17,6 @@ interface MoviesRepository {
     fun createMovieReminder(reminderInMillis: Long, reminderDay: Int, movie: Movie): Flow<Unit>
 
     fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit>
+
+    suspend fun scheduleNotifications(deviceToken: String, movieId: Int, movieName: String, movieReleaseDate: String): Result<Unit>
 }

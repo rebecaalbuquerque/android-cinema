@@ -77,4 +77,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favorite" />
 
+    <ProgressBar
+        android:id="@+id/reminderLoading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/reminder"
+        app:layout_constraintEnd_toEndOf="@id/reminder"
+        app:layout_constraintStart_toStartOf="@id/reminder"
+        app:layout_constraintTop_toTopOf="@id/reminder" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

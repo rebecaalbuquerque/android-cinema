@@ -16,17 +16,15 @@ class MoviesRemoteDataSourceImpl(
         emit(moviesApi.getUpcomingMovies())
     }
 
-    override fun scheduleNotification(
+    override suspend fun scheduleNotification(
         movieId: Int,
         movieName: String,
         releaseDate: String,
         deviceToken: String,
         deviceUuid: String
-    ) = flow {
-        emit(
-            moviesNotificationApi.scheduleNotification(
-                MovieNotificationRequest(movieId, movieName, releaseDate, deviceToken, deviceUuid)
-            )
+    ): Result<Unit> {
+        return moviesNotificationApi.scheduleNotification(
+            MovieNotificationRequest(movieId, movieName, releaseDate, deviceToken, deviceUuid)
         )
     }
 }

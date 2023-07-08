@@ -31,7 +31,8 @@ internal fun Movie.toEntity(): MovieEntity {
         overview = overview,
         releaseDate = releaseDate,
         isFavorite = isFavorite,
-        hasReminder = hasReminder
+        hasReminder = hasReminder,
+        reminderStatus = Movie.ReminderStatus.getByValue(this.reminderStatus).name
     )
 }
 
@@ -42,6 +43,7 @@ internal fun MovieEntity.toMovie(): Movie {
         overview = overview.orEmpty(),
         releaseDate = releaseDate.orEmpty(),
         isFavorite = isFavorite ?: false,
-        hasReminder = hasReminder ?: false
+        hasReminder = hasReminder ?: false,
+        reminderStatus = MovieEntity.ReminderStatus.getByValue(this.reminderStatus).name
     )
 }

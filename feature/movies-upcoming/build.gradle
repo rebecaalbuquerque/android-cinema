@@ -7,6 +7,7 @@ dependencies {
     implementation project(':core:common-ui')
     implementation project(":navigation")
     implementation project(":domain:movies")
+    implementation project(":domain:auth")
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
 

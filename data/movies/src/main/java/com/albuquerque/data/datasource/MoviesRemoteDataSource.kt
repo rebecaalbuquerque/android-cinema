@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesRemoteDataSource {
     fun getUpcomingMovies(): Flow<MovieListResponse>
 
-    fun scheduleNotification(movieId: Int, movieName: String, releaseDate: String, deviceToken: String, deviceUuid: String): Flow<Unit>
+    suspend fun scheduleNotification(movieId: Int, movieName: String, releaseDate: String, deviceToken: String, deviceUuid: String): Result<Unit>
 }

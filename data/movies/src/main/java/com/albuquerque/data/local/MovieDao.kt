@@ -16,6 +16,6 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
     fun getFavorites(): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movies WHERE hasReminder = 1")
+    @Query("SELECT * FROM movies WHERE reminderStatus IN ('SCHEDULED', 'TRYING_TO_SCHEDULE', 'NOT_SCHEDULED')")
     fun getReminders(): Flow<List<MovieEntity>>
 }

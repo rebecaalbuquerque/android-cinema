@@ -46,11 +46,19 @@ class MoviesRepositoryImpl(
             }
         }.combine(remindersDb) { upcomingMoviesUpdated, reminders ->
             upcomingMoviesUpdated.copy(
-                results = upcomingMoviesUpdated.results.map { movie ->
-                    if (reminders.map { it.id }.contains(movie.id)){
-                        movie.copy(hasReminder = true)
+                results = upcomingMoviesUpdated.results.map { remoteMovie ->
+                    if (reminders.map { it.id }.contains(remoteMovie.id)){
+                        val localMovieReminderStatus = reminders
+                            .firstOrNull { it.id == remoteMovie.id }
+                            ?.reminderStatus
+                            .orEmpty()
+
+                        remoteMovie.copy(
+                            hasReminder = true,
+                            reminderStatus = localMovieReminderStatus
+                        )
                     } else {
-                        movie
+                        remoteMovie
                     }
                 }
             )
@@ -75,5 +83,20 @@ class MoviesRepositoryImpl(
 
     override fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit> {
         return localDataSource.deleteMovieReminder(reminderDay, movie)
+    }
+
+    override suspend fun scheduleNotifications(
+        deviceToken: String,
+        movieId: Int,
+        movieName: String,
+        movieReleaseDate: String
+    ): Result<Unit> {
+        return remoteDataSource.scheduleNotification(
+            movieId,
+            movieName,
+            movieReleaseDate,
+            deviceToken,
+            ""
+        )
     }
 }

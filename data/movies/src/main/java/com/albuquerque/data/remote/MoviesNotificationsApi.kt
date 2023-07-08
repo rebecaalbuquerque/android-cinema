@@ -10,7 +10,7 @@ interface MoviesNotificationsApi {
     @POST("notifications/schedule")
     suspend fun scheduleNotification(
         @Body movieNotification: MovieNotificationRequest
-    )
+    ): Result<Unit>
 
     @GET("notifications/unschedule")
     suspend fun unscheduleNotification()

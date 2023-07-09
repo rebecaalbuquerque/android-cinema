@@ -46,7 +46,7 @@ class MoviesRepositoryImpl(
             }
         }.combine(remindersDb) { upcomingMoviesUpdated, reminders ->
             upcomingMoviesUpdated.copy(
-                results = upcomingMoviesUpdated.results.map { remoteMovie ->
+                /*results = upcomingMoviesUpdated.results.map { remoteMovie ->
                     if (reminders.map { it.id }.contains(remoteMovie.id)){
                         val localMovieReminderStatus = reminders
                             .firstOrNull { it.id == remoteMovie.id }
@@ -59,6 +59,13 @@ class MoviesRepositoryImpl(
                         )
                     } else {
                         remoteMovie
+                    }
+                }*/
+                results = upcomingMoviesUpdated.results.map { movie ->
+                    if (reminders.map { it.id }.contains(movie.id)){
+                        movie.copy(hasReminder = true)
+                    } else {
+                        movie
                     }
                 }
             )

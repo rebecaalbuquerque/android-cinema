@@ -64,7 +64,10 @@ class MoviesUpcomingViewHolder(
             if (currentMovie?.isFavorite == true) R.drawable.ds_ic_favorite else R.drawable.ds_ic_favorite_outline
         )
 
-        when (Movie.ReminderStatus.getByValue(currentMovie?.reminderStatus)) {
+        reminder.setImageResource(
+            if (currentMovie?.hasReminder == true) R.drawable.ds_ic_reminder else R.drawable.ds_ic_reminder_outline
+        )
+        /*when (Movie.ReminderStatus.getByValue(currentMovie?.reminderStatus)) {
             Movie.ReminderStatus.TRYING_TO_SCHEDULE -> {
                 reminder.isInvisible = true
                 reminderLoading.isVisible = true
@@ -79,6 +82,6 @@ class MoviesUpcomingViewHolder(
                 reminder.isVisible = true
                 reminderLoading.isInvisible = true
             }
-        }
+        }*/
     }
 }

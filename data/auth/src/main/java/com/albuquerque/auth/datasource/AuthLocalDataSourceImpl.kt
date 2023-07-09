@@ -11,6 +11,18 @@ class AuthLocalDataSourceImpl(
     private val dataStore: DataStore<Preferences>
 ) : AuthLocalDataSource {
 
+    override suspend fun saveUser(user: String) {
+        dataStore.edit { preferences ->
+            preferences[AuthPreferencesKeys.USER] = user
+        }
+    }
+
+    override fun getUser(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[AuthPreferencesKeys.USER]
+        }
+    }
+
     override suspend fun saveFcmToken(token: String) {
         dataStore.edit { preferences ->
             preferences[AuthPreferencesKeys.FCM_TOKEN] = token

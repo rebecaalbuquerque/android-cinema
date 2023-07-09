@@ -42,11 +42,9 @@ class MainAppActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        checkAppUpdate(
-            onUpdateNotAvailable = {
-                setupMainAppGraph()
-            }
-        )
+        checkAppUpdate(onUpdateNotAvailable = {
+            setupMainAppGraph()
+        })
         checkFirebaseToken()
         generateDeviceUUID()
     }

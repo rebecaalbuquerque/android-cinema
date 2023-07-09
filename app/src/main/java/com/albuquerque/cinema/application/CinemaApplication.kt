@@ -5,6 +5,7 @@ import com.albuquerque.analytics.analyticsModule
 import com.albuquerque.auth.di.authDataModule
 import com.albuquerque.auth.di.authDomainModule
 import com.albuquerque.cinema.di.appModule
+import com.albuquerque.cinema.entry.di.entryPresentationModule
 import com.albuquerque.common.di.notificationModule
 import com.albuquerque.data.di.moviesDataModule
 import com.albuquerque.data.di.networkModule
@@ -30,6 +31,7 @@ class CinemaApplication : Application() {
                 moviesDataModule,
                 authDomainModule,
                 moviesDomainModule,
+                entryPresentationModule,
                 moviesUpcomingPresentationModules,
                 favoritesPresentationModules,
                 remindersPresentationModules

@@ -44,6 +44,7 @@ dependencies {
     implementation project(":data:movies")
     implementation project(":domain:auth")
     implementation project(":domain:movies")
+    implementation project(":feature:entry")
     implementation project(":feature:movies-upcoming")
     implementation project(":feature:favorites")
     implementation project(":feature:reminders")

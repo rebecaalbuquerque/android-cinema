@@ -7,6 +7,14 @@ class AuthRepositoryImpl(
     private val localDataSource: AuthLocalDataSource
 ) : AuthRepository {
 
+    override suspend fun saveUser(user: String) {
+        localDataSource.saveUser(user)
+    }
+
+    override fun getUser(): Flow<String?> {
+        return localDataSource.getUser()
+    }
+
     override fun getFcmToken(): Flow<String?> {
         return localDataSource.getFcmToken()
     }

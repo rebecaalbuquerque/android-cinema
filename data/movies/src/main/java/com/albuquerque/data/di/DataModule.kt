@@ -33,7 +33,6 @@ val networkModule = module {
                 }
             )
             .addInterceptor(ApiInterceptor())
-            .build()
     }
 
     single<GsonConverterFactory> {
@@ -47,7 +46,11 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
-            .client(get())
+            .client(
+                get<OkHttpClient.Builder>()
+                    .addInterceptor(ApiInterceptor())
+                    .build()
+            )
             .addConverterFactory(get<GsonConverterFactory>())
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
@@ -57,7 +60,9 @@ val networkModule = module {
     single {
         Retrofit.Builder()
             .baseUrl("https://cinema-backend-app-f958bf189e10.herokuapp.com/")
-            .client(get())
+            .client(
+                get<OkHttpClient.Builder>().build()
+            )
             .addConverterFactory(get<GsonConverterFactory>())
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()

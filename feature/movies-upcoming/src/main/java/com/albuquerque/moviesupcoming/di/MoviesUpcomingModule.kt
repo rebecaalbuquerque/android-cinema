@@ -15,6 +15,7 @@ val moviesUpcomingPresentationModules = module {
             toggleFavoriteUseCase = get(),
             scheduleNotificationsUseCase = get(),
             getFcmTokenUseCase = get(),
+            getUuidUseCase = get(),
             tracker = get()
         )
     }

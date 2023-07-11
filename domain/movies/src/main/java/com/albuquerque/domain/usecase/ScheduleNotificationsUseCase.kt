@@ -7,7 +7,7 @@ class ScheduleNotificationsUseCase(
     private val repository: MoviesRepository
 ) {
 
-    suspend operator fun invoke(movie: Movie, deviceToken: String) {
+    suspend operator fun invoke(movie: Movie, deviceToken: String, deviceUuid: String) {
         val previousReminderStatus = movie.reminderStatus
 
         try {
@@ -17,6 +17,7 @@ class ScheduleNotificationsUseCase(
 
             val scheduling = repository.scheduleNotifications(
                 deviceToken,
+                deviceUuid,
                 movie.id,
                 movie.title,
                 movie.releaseDate

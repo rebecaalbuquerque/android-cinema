@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.albuquerque.analytics.EventName
 import com.albuquerque.analytics.EventTracker
 import com.albuquerque.analytics.PropertiesName
+import com.albuquerque.auth.domain.GetDeviceUuidUseCase
 import com.albuquerque.auth.domain.GetFcmTokenUseCase
 import com.albuquerque.domain.model.Movie
 import com.albuquerque.domain.usecase.ScheduleNotificationsUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,6 +26,7 @@ internal class MoviesUpcomingViewModel(
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val scheduleNotificationsUseCase: ScheduleNotificationsUseCase,
     private val getFcmTokenUseCase: GetFcmTokenUseCase,
+    private val getUuidUseCase: GetDeviceUuidUseCase,
     private val tracker: EventTracker,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
@@ -60,10 +63,11 @@ internal class MoviesUpcomingViewModel(
         }
 
         viewModelScope.launch {
+
             getFcmTokenUseCase()
                 .flowOn(dispatcher)
-                .collect { token ->
-                    scheduleNotificationsUseCase(movie, token)
+                .combine(getUuidUseCase().flowOn(dispatcher)) { fcmToken, uuid ->
+                    scheduleNotificationsUseCase(movie, fcmToken, uuid)
                 }
         }
     }

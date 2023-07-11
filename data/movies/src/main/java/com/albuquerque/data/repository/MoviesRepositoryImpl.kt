@@ -87,6 +87,7 @@ class MoviesRepositoryImpl(
 
     override suspend fun scheduleNotifications(
         deviceToken: String,
+        deviceUuid: String,
         movieId: Int,
         movieName: String,
         movieReleaseDate: String
@@ -96,7 +97,7 @@ class MoviesRepositoryImpl(
             movieName,
             movieReleaseDate,
             deviceToken,
-            ""
+            deviceUuid
         )
     }
 }

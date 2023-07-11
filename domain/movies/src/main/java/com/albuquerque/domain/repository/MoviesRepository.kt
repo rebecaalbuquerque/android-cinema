@@ -18,5 +18,5 @@ interface MoviesRepository {
 
     fun deleteMovieReminder(reminderDay: Int, movie: Movie): Flow<Unit>
 
-    suspend fun scheduleNotifications(deviceToken: String, movieId: Int, movieName: String, movieReleaseDate: String): Result<Unit>
+    suspend fun scheduleNotifications(deviceToken: String, deviceUuid: String, movieId: Int, movieName: String, movieReleaseDate: String): Result<Unit>
 }

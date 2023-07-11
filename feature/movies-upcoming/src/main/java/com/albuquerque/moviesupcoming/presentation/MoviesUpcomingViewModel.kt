@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
@@ -67,7 +68,9 @@ internal class MoviesUpcomingViewModel(
             getFcmTokenUseCase()
                 .flowOn(dispatcher)
                 .combine(getUuidUseCase().flowOn(dispatcher)) { fcmToken, uuid ->
-                    scheduleNotificationsUseCase(movie, fcmToken, uuid)
+                    Pair(fcmToken, uuid)
+                }.collect { result ->
+                    scheduleNotificationsUseCase(movie, result.first, result.second)
                 }
         }
     }
